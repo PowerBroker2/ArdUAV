@@ -2,8 +2,8 @@
 #include "IFC_Serial.h"
 
 #include "Shared_Tools.h"
-#include "ArdUAV_SerialTransfer.h"
-#include "ArdUAV_neo6mGPS.h"
+#include "SerialTransfer.h"
+#include "neo6mGPS.h"
 
 
 
