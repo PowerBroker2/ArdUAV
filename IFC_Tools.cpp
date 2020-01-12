@@ -260,42 +260,9 @@ void IFC_Class::sendTelem()
 		//reset timer
 		timeBench_Telem += REPORT_TELEM_PERIOD;
 
-		//update the radio's outgoing array with the propper information
-		IFC_telemetryTransfer.txBuff[0]  = (uint8_t)(((int16_t)(telemetry.velocity * 100)) >> 8);
-		IFC_telemetryTransfer.txBuff[1]  = (uint8_t)(((int16_t)(telemetry.velocity * 100)) & 0xFF);
-
-		IFC_telemetryTransfer.txBuff[2]  = (uint8_t)(((int16_t)(telemetry.altitude * 100)) >> 8);
-		IFC_telemetryTransfer.txBuff[3]  = (uint8_t)(((int16_t)(telemetry.altitude * 100)) & 0xFF);
-
-		IFC_telemetryTransfer.txBuff[4]  = (uint8_t)(((int16_t)(telemetry.pitchAngle * 100)) >> 8);
-		IFC_telemetryTransfer.txBuff[5]  = (uint8_t)(((int16_t)(telemetry.pitchAngle * 100)) & 0xFF);
-
-		IFC_telemetryTransfer.txBuff[6]  = (uint8_t)(((int16_t)(telemetry.rollAngle * 100)) >> 8);
-		IFC_telemetryTransfer.txBuff[7]  = (uint8_t)(((int16_t)(telemetry.rollAngle * 100)) & 0xFF);
-
-		IFC_telemetryTransfer.txBuff[8]  = (uint8_t)(((int16_t)(telemetry.latitude * 100)) >> 8);
-		IFC_telemetryTransfer.txBuff[9]  = (uint8_t)(((int16_t)(telemetry.latitude * 100)) & 0xFF);
-
-		IFC_telemetryTransfer.txBuff[10] = (uint8_t)(((int16_t)(telemetry.longitude * 100)) >> 8);
-		IFC_telemetryTransfer.txBuff[11] = (uint8_t)(((int16_t)(telemetry.longitude * 100)) & 0xFF);
-
-		IFC_telemetryTransfer.txBuff[12] = (uint8_t)(telemetry.UTC_year >> 8);
-		IFC_telemetryTransfer.txBuff[13] = (uint8_t)(telemetry.UTC_year & 0xFF);
-		IFC_telemetryTransfer.txBuff[14] = telemetry.UTC_month;
-		IFC_telemetryTransfer.txBuff[15] = telemetry.UTC_day;
-		IFC_telemetryTransfer.txBuff[16] = telemetry.UTC_hour;
-		IFC_telemetryTransfer.txBuff[17] = telemetry.UTC_minute;
-		IFC_telemetryTransfer.txBuff[18] = (uint8_t)(((int16_t)(telemetry.UTC_second * 100)) >> 8);
-		IFC_telemetryTransfer.txBuff[19] = (uint8_t)(((int16_t)(telemetry.UTC_second * 100)) & 0xFF);
-
-		IFC_telemetryTransfer.txBuff[20] = (uint8_t)(((int16_t)(telemetry.speedOverGround * 100)) >> 8);
-		IFC_telemetryTransfer.txBuff[21] = (uint8_t)(((int16_t)(telemetry.speedOverGround * 100)) & 0xFF);
-
-		IFC_telemetryTransfer.txBuff[22] = (uint8_t)(((int16_t)(telemetry.courseOverGround * 100)) >> 8);
-		IFC_telemetryTransfer.txBuff[23] = (uint8_t)(((int16_t)(telemetry.courseOverGround * 100)) & 0xFF);
-
 		//send the telemetry data to GS
-		IFC_telemetryTransfer.sendData(24);
+		IFC_telemetryTransfer.txObj(telemetry, sizeof(telemetry));
+		IFC_telemetryTransfer.sendData(sizeof(telemetry));
 	}
 }
 
