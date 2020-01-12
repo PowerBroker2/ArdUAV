@@ -45,26 +45,6 @@
 #define ELEVATOR_MID           (uint16_t)((ELEVATOR_MAX + ELEVATOR_MIN) / 2)
 #define RUDDER_MID             (uint16_t)((RUDDER_MAX   + RUDDER_MIN)   / 2)
 
-/////////////////////////////////////////////////////////////////////////////////////////
-//DO NOT EDIT THIS BLOCK-----------------------------------------------------------------
-#define PITCH_COMMAND_MSB      0
-#define PITCH_COMMAND_LSB      1
-#define ROLL_COMMAND_MSB       2
-#define ROLL_COMMAND_LSB       3
-#define YAW_COMMAND_MSB        4
-#define YAW_COMMAND_LSB        5
-#define THROTTLE_COMMAND_MSB   6
-#define THROTTLE_COMMAND_LSB   7
-#define AUTOPILOT_COMMAND_MSB  8
-#define AUTOPILOT_COMMAND_LSB  9
-#define LIMITER_COMMAND_MSB    10
-#define LIMITER_COMMAND_LSB    11
-#define GEAR_COMMAND_MSB       12
-#define GEAR_COMMAND_LSB       13
-#define FLAPS_COMMAND_MSB      14
-#define FLAPS_COMMAND_LSB      15
-/////////////////////////////////////////////////////////////////////////////////////////
-
 
 
 
