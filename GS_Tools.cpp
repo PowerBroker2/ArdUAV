@@ -139,25 +139,8 @@ void GS_Class::computeCommands()
 void GS_Class::sendCommands()
 {
 	//update the radio's outgoing array with the propper information
-	GS_commandTransfer.txBuff[PITCH_COMMAND_MSB]     = (myGS.controlInputs.pitch_command >> 8) & 0xFF;
-	GS_commandTransfer.txBuff[PITCH_COMMAND_LSB]     = (myGS.controlInputs.pitch_command) & 0xFF;
-	GS_commandTransfer.txBuff[ROLL_COMMAND_MSB]      = (myGS.controlInputs.roll_command >> 8) & 0xFF;
-	GS_commandTransfer.txBuff[ROLL_COMMAND_LSB]      = (myGS.controlInputs.roll_command) & 0xFF;
-	GS_commandTransfer.txBuff[YAW_COMMAND_MSB]       = (myGS.controlInputs.yaw_command >> 8) & 0xFF;
-	GS_commandTransfer.txBuff[YAW_COMMAND_LSB]       = (myGS.controlInputs.yaw_command) & 0xFF;
-	GS_commandTransfer.txBuff[THROTTLE_COMMAND_MSB]  = (myGS.controlInputs.throttle_command >> 8) & 0xFF;
-	GS_commandTransfer.txBuff[THROTTLE_COMMAND_LSB]  = (myGS.controlInputs.throttle_command) & 0xFF;
-	GS_commandTransfer.txBuff[AUTOPILOT_COMMAND_MSB] = (myGS.controlInputs.autopilot_command >> 8) & 0xFF;
-	GS_commandTransfer.txBuff[AUTOPILOT_COMMAND_LSB] = (myGS.controlInputs.autopilot_command) & 0xFF;
-	GS_commandTransfer.txBuff[LIMITER_COMMAND_MSB]   = (myGS.controlInputs.limiter_command >> 8) & 0xFF;
-	GS_commandTransfer.txBuff[LIMITER_COMMAND_LSB]   = (myGS.controlInputs.limiter_command) & 0xFF;
-	GS_commandTransfer.txBuff[GEAR_COMMAND_MSB]      = (myGS.controlInputs.gear_command >> 8) & 0xFF;
-	GS_commandTransfer.txBuff[GEAR_COMMAND_LSB]      = (myGS.controlInputs.gear_command) & 0xFF;
-	GS_commandTransfer.txBuff[FLAPS_COMMAND_MSB]     = (myGS.controlInputs.flaps_command >> 8) & 0xFF;
-	GS_commandTransfer.txBuff[FLAPS_COMMAND_LSB]     = (myGS.controlInputs.flaps_command ) & 0xFF;
-
-	//send the telemetry data to GS - First 16 bytes are reserved, leaving 6 for user defined bytes
-	GS_commandTransfer.sendData(16);
+	GS_commandTransfer.txObj(controlInputs, sizeof(controlInputs));
+	GS_commandTransfer.sendData(sizeof(controlInputs));
 }
 
 
