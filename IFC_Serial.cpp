@@ -14,14 +14,7 @@ void commEvent_IFC()
 		packetDetected = true;
 
 		//update controlInputs struct so that the next time the servos can be updated with the latest positions
-		myIFC.controlInputs.pitch_command       = (IFC_commandTransfer.rxBuff[0] << 8)  | IFC_commandTransfer.rxBuff[1];
-		myIFC.controlInputs.roll_command        = (IFC_commandTransfer.rxBuff[2] << 8)  | IFC_commandTransfer.rxBuff[3];
-		myIFC.controlInputs.yaw_command         = (IFC_commandTransfer.rxBuff[4] << 8)  | IFC_commandTransfer.rxBuff[5];
-		myIFC.controlInputs.throttle_command    = (IFC_commandTransfer.rxBuff[6] << 8)  | IFC_commandTransfer.rxBuff[7];
-		myIFC.controlInputs.autopilot_command   = (IFC_commandTransfer.rxBuff[8] << 8)  | IFC_commandTransfer.rxBuff[9];
-		myIFC.controlInputs.limiter_command     = (IFC_commandTransfer.rxBuff[10] << 8) | IFC_commandTransfer.rxBuff[11];
-		myIFC.controlInputs.gear_command        = (IFC_commandTransfer.rxBuff[12] << 8) | IFC_commandTransfer.rxBuff[13];
-		myIFC.controlInputs.flaps_command       = (IFC_commandTransfer.rxBuff[14] << 8) | IFC_commandTransfer.rxBuff[15];
+		IFC_commandTransfer.rxObj(myIFC.controlInputs, sizeof(myIFC.controlInputs));
 		
 		//tweak the contents of controlInputs to keep the plane from unsafe maneuvers
 		//myIFC.bankPitchLimiter(myIFC.controlInputs.limiter_enable, true);
