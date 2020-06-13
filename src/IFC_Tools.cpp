@@ -163,6 +163,7 @@ void IFC_Class::begin()
 
 	//initialize the timers
 	IFC_DEBUG_PORT.println(F("Initializing timers..."));
+	lossLinkTimer.begin(LOSS_LINK_TIMEOUT);
 	limiterTimer.begin(LIMITER_PERIOD);
 	telemTimer.begin(REPORT_TELEM_PERIOD);
 	imuTimer.begin(LIMITER_PERIOD);
@@ -173,6 +174,64 @@ void IFC_Class::begin()
 
 	IFC_DEBUG_PORT.println(F("Initialization complete"));
 	IFC_DEBUG_PORT.println(F("--------------------------------------------------"));
+}
+
+
+
+
+void IFC_Class::handleSerialEvents()
+{
+	commEvent_IFC();
+	lidarEvent_IFC();
+}
+
+
+
+
+void IFC_Class::commEvent_IFC()
+{
+	if (IFC_commandTransfer.available())
+	{
+		packetDetected = true;
+
+		//update controlInputs struct so that the next time the servos can be updated with the latest positions
+		IFC_commandTransfer.rxObj(myIFC.controlInputs, sizeof(myIFC.controlInputs));
+
+		lossLinkTimer.reset();
+	}
+	else if (IFC_commandTransfer.status < 0)
+	{
+		IFC_DEBUG_PORT.print("Command Link Serial Transfer ERROR: ");
+		IFC_DEBUG_PORT.println(IFC_commandTransfer.status);
+	}
+
+	if (lossLinkTimer.fire(false))
+	{
+
+	}
+}
+
+
+
+
+void IFC_Class::lidarEvent_IFC()
+{
+	if (IFC_lidarTransfer.available())
+	{
+		//update controlInputs struct so that the next time the servos can be updated with the latest positions
+		IFC_lidarTransfer.rxObj(myIFC.telemetry.altitude, sizeof(myIFC.telemetry.altitude));
+
+		//use trig to find the triangulated elevation if the LiDAR sensor is not stabilized with a gimbal
+		if (LIDAR_FIXED_MOUNT)
+			myIFC.telemetry.convertedAltitude = myIFC.telemetry.altitude * cos(myIFC.telemetry.convertedRoll) * cos(myIFC.telemetry.convertedPitch);
+		else
+			myIFC.telemetry.convertedAltitude = myIFC.telemetry.altitude;
+	}
+	else if (IFC_lidarTransfer.status < 0)
+	{
+		IFC_DEBUG_PORT.print("LiDAR Link Serial Transfer ERROR: ");
+		IFC_DEBUG_PORT.println(IFC_lidarTransfer.status);
+	}
 }
 
 

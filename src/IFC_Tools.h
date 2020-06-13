@@ -52,16 +52,15 @@
 class IFC_Class
 {
 public:
-	//struct to store telemetry data
+	FireTimer lossLinkTimer;
 	telemetry_struct telemetry;
-
-	//struct to store control values (i.e. servo commands etc.)
 	controlInputs_struct controlInputs;
 
 
 
 
 	void begin();
+	void handleSerialEvents();
 	bool grabData_GPS();
 	int grabData_IMU();
 	int grabData_Pitot();
@@ -84,6 +83,8 @@ private:
 
 
 
+	void commEvent_IFC();
+	void lidarEvent_IFC();
 	void updateControlsLimiter(bool axis);
 };
 
