@@ -179,25 +179,24 @@ void IFC_Class::begin()
 
 
 
-void IFC_Class::handleSerialEvents()
+bool IFC_Class::handleSerialEvents()
 {
-	commEvent_IFC();
 	lidarEvent_IFC();
+	return commEvent_IFC();
 }
 
 
 
 
-void IFC_Class::commEvent_IFC()
+bool IFC_Class::commEvent_IFC()
 {
 	if (IFC_commandTransfer.available())
 	{
-		packetDetected = true;
-
 		//update controlInputs struct so that the next time the servos can be updated with the latest positions
-		IFC_commandTransfer.rxObj(myIFC.controlInputs, sizeof(myIFC.controlInputs));
+		IFC_commandTransfer.rxObj(controlInputs, sizeof(controlInputs));
 
-		lossLinkTimer.reset();
+		lossLinkTimer.start();
+		linkConnected = true;
 	}
 	else if (IFC_commandTransfer.status < 0)
 	{
@@ -207,8 +206,24 @@ void IFC_Class::commEvent_IFC()
 
 	if (lossLinkTimer.fire(false))
 	{
-
+		linkFailover();
+		linkConnected = false;
 	}
+
+	return linkConnected;
+}
+
+
+
+
+void IFC_Class::linkFailover()
+{
+	controlInputs.pitch_command    = 1500;
+	controlInputs.roll_command     = 1500;
+	controlInputs.yaw_command      = 1500;
+	controlInputs.throttle_command = 1500;
+
+	updateServos();
 }
 
 
@@ -360,30 +375,26 @@ void IFC_Class::updateSingleServo(byte INDEX, uint16_t value)
 
 
 //keep the plane from pitching or rolling too much in any direction
-void IFC_Class::bankPitchLimiter(bool enable, bool _linkConnected)
+void IFC_Class::bankPitchLimiter()
 {
-	//determine if user wants to engage the bank and pitch limiter
-	if (enable)
+	//determine if the radio link is healthy and connected
+	if (linkConnected)
 	{
-		//determine if the radio link is healthy and connected
-		if (_linkConnected)
+		//update struct based on euler angles
+		updateControlsLimiter(PITCH_AXIS);	//pitch
+		updateControlsLimiter(ROLL_AXIS);	//roll
+	}
+	else
+	{
+		//use timer to send commands to the servos at a fixed rate
+		if (limiterTimer.fire())
 		{
 			//update struct based on euler angles
 			updateControlsLimiter(PITCH_AXIS);	//pitch
 			updateControlsLimiter(ROLL_AXIS);	//roll
-		}
-		else
-		{
-			//use timer to send commands to the servos at a fixed rate
-			if (limiterTimer.fire())
-			{
-				//update struct based on euler angles
-				updateControlsLimiter(PITCH_AXIS);	//pitch
-				updateControlsLimiter(ROLL_AXIS);	//roll
 
-				//update servo positions (use controlInputs commands)
-				updateServos();
-			}
+			//update servo positions (use controlInputs commands)
+			updateServos();
 		}
 	}
 }

@@ -11,7 +11,6 @@ void commEvent_GS()
 {
 	if (GS_telemetryTransfer.available())
 	{
-		packetDetected = true;
 		myGS.newTelem = true;
 
 		//update telemetry struct with latest telemetry data
@@ -19,13 +18,9 @@ void commEvent_GS()
 	}
 	else if (GS_telemetryTransfer.status < 0)
 	{
-		packetDetected = false;
-
 		GS_DEBUG_PORT.print("Telemetry Link Serial Transfer ERROR: ");
 		GS_DEBUG_PORT.println(GS_telemetryTransfer.status);
 	}
-	else
-		packetDetected = false;
 }
 
 
