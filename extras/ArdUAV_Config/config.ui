@@ -66,7 +66,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="Debug_Port_Baud">
+                  <widget class="QComboBox" name="debug_baud">
                    <property name="currentIndex">
                     <number>8</number>
                    </property>
@@ -167,7 +167,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="Command_Port_Baud">
+                  <widget class="QComboBox" name="command_baud">
                    <property name="currentIndex">
                     <number>8</number>
                    </property>
@@ -268,7 +268,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="GPS_Port_Baud">
+                  <widget class="QComboBox" name="gps_baud">
                    <property name="currentText">
                     <string>9600</string>
                    </property>
@@ -372,7 +372,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="LiDAR_Port_Baud">
+                  <widget class="QComboBox" name="lidar_baud">
                    <property name="currentText">
                     <string>115200</string>
                    </property>
@@ -476,7 +476,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="Telemetry_Port_Baud">
+                  <widget class="QComboBox" name="telem_baud">
                    <property name="currentIndex">
                     <number>4</number>
                    </property>
@@ -603,7 +603,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QDoubleSpinBox" name="CommandReportingRate">
+                  <widget class="QDoubleSpinBox" name="command_report_rate">
                    <property name="maximum">
                     <double>150.000000000000000</double>
                    </property>
@@ -624,7 +624,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QDoubleSpinBox" name="TelemetryReportingRate">
+                  <widget class="QDoubleSpinBox" name="telem_report_rate">
                    <property name="maximum">
                     <double>150.000000000000000</double>
                    </property>
@@ -645,287 +645,9 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="LossLinkTimeout">
+                  <widget class="QSpinBox" name="loss_link_timeout">
                    <property name="maximum">
                     <number>10000</number>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="SharedThrottleSettings">
-          <attribute name="title">
-           <string>Throttle Settings</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_4">
-           <item row="0" column="0">
-            <widget class="QScrollArea" name="scrollArea_2">
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents_2">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>737</width>
-                <height>422</height>
-               </rect>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_7">
-               <item row="1" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_30">
-                 <item>
-                  <widget class="QLabel" name="label_30">
-                   <property name="text">
-                    <string>Min Throttle Value</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="MinThrottleValue">
-                   <property name="minimum">
-                    <number>0</number>
-                   </property>
-                   <property name="maximum">
-                    <number>180</number>
-                   </property>
-                   <property name="value">
-                    <number>0</number>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_27">
-                 <item>
-                  <widget class="QLabel" name="label_27">
-                   <property name="text">
-                    <string>Max Throttle Value</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="MaxThrottleValue">
-                   <property name="maximum">
-                    <number>255</number>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="SharedElevatorSettings">
-          <attribute name="title">
-           <string>Elevator Settings</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_5">
-           <item row="0" column="0">
-            <widget class="QScrollArea" name="scrollArea_3">
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents_4">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>737</width>
-                <height>422</height>
-               </rect>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_9">
-               <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_32">
-                 <item>
-                  <widget class="QLabel" name="label_32">
-                   <property name="text">
-                    <string>Max Elevator Value</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="MaxElevatorValue">
-                   <property name="maximum">
-                    <number>3000</number>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="1" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_33">
-                 <item>
-                  <widget class="QLabel" name="label_33">
-                   <property name="text">
-                    <string>Min Elevator Value</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="MinElevatorValue">
-                   <property name="maximum">
-                    <number>3000</number>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="SharedAileronSettings">
-          <attribute name="title">
-           <string>Aileron Settings</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_6">
-           <item row="0" column="0">
-            <widget class="QScrollArea" name="scrollArea_4">
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents_5">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>737</width>
-                <height>422</height>
-               </rect>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_10">
-               <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_35">
-                 <item>
-                  <widget class="QLabel" name="label_35">
-                   <property name="text">
-                    <string>Max Aileron Value</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="MaxAileronValue">
-                   <property name="maximum">
-                    <number>3000</number>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="1" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_36">
-                 <item>
-                  <widget class="QLabel" name="label_36">
-                   <property name="text">
-                    <string>Min Aileron Value</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="MinAileronValue">
-                   <property name="maximum">
-                    <number>3000</number>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="tab_5">
-          <attribute name="title">
-           <string>Rudder Settings</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_8">
-           <item row="0" column="0">
-            <widget class="QScrollArea" name="scrollArea_5">
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents_6">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>737</width>
-                <height>422</height>
-               </rect>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_14">
-               <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_38">
-                 <item>
-                  <widget class="QLabel" name="label_38">
-                   <property name="text">
-                    <string>Max Rudder Value</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="MaxRudderValue">
-                   <property name="maximum">
-                    <number>3000</number>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="1" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_39">
-                 <item>
-                  <widget class="QLabel" name="label_39">
-                   <property name="text">
-                    <string>Min Rudder Value</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="MinRudderValue">
-                   <property name="maximum">
-                    <number>3000</number>
                    </property>
                   </widget>
                  </item>
@@ -943,7 +665,7 @@
      </widget>
      <widget class="QWidget" name="GS_Tab">
       <attribute name="title">
-       <string>GS_Tools</string>
+       <string>GS Tools</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_28">
        <item row="0" column="0">
@@ -971,8 +693,15 @@
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_24">
-               <item row="0" column="0">
+               <item row="1" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_40">
+                 <item>
+                  <widget class="QCheckBox" name="enable_gs_debugging">
+                   <property name="text">
+                    <string>Enable Debugging</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item>
                   <widget class="QLabel" name="label_40">
                    <property name="text">
@@ -984,7 +713,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="GSDebugPort">
+                  <widget class="QComboBox" name="gs_debug_port">
                    <item>
                     <property name="text">
                      <string>USB</string>
@@ -1015,11 +744,96 @@
                      <string>Serial5</string>
                     </property>
                    </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial6</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial7</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial8</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                 </layout>
                </item>
-               <item row="1" column="0">
+               <item row="3" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_42">
+                 <item>
+                  <widget class="QCheckBox" name="enable_gs_telem">
+                   <property name="text">
+                    <string>Enable Telemetry</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_42">
+                   <property name="text">
+                    <string>Telemetry Port</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="gs_telem_port">
+                   <item>
+                    <property name="text">
+                     <string>USB</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial1</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial2</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial3</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial4</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial5</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial6</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial7</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial8</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="0" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_41">
                  <item>
                   <widget class="QLabel" name="label_41">
@@ -1032,7 +846,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="GSCommandPort">
+                  <widget class="QComboBox" name="gs_command_port">
                    <item>
                     <property name="text">
                      <string>USB</string>
@@ -1063,52 +877,19 @@
                      <string>Serial5</string>
                     </property>
                    </item>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="2" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_42">
-                 <item>
-                  <widget class="QLabel" name="label_42">
-                   <property name="text">
-                    <string>Telemetry Port</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QComboBox" name="GSTelemetryPort">
                    <item>
                     <property name="text">
-                     <string>USB</string>
+                     <string>Serial6</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>Serial1</string>
+                     <string>Serial7</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>Serial2</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Serial3</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Serial4</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Serial5</string>
+                     <string>Serial8</string>
                     </property>
                    </item>
                   </widget>
@@ -1125,26 +906,26 @@
           <attribute name="title">
            <string>Throttle Settings</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout_20">
-           <item row="0" column="0">
-            <widget class="QScrollArea" name="scrollArea_9">
+          <layout class="QVBoxLayout" name="verticalLayout_12">
+           <item>
+            <widget class="QScrollArea" name="scrollArea_19">
              <property name="widgetResizable">
               <bool>true</bool>
              </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents_9">
+             <widget class="QWidget" name="scrollAreaWidgetContents_19">
               <property name="geometry">
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>203</width>
-                <height>124</height>
+                <width>737</width>
+                <height>422</height>
                </rect>
               </property>
-              <layout class="QGridLayout" name="gridLayout_21">
+              <layout class="QGridLayout" name="gridLayout_20">
                <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_43">
+                <layout class="QHBoxLayout" name="horizontalLayout_61">
                  <item>
-                  <widget class="QLabel" name="label_43">
+                  <widget class="QLabel" name="label_61">
                    <property name="text">
                     <string>Throttle Analog Pin</string>
                    </property>
@@ -1154,10 +935,15 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="ThrottleAnalogPin">
+                  <widget class="QComboBox" name="throttle_an_pin">
                    <property name="currentIndex">
-                    <number>3</number>
+                    <number>0</number>
                    </property>
+                   <item>
+                    <property name="text">
+                     <string>s0</string>
+                    </property>
+                   </item>
                    <item>
                     <property name="text">
                      <string>s1</string>
@@ -1165,42 +951,70 @@
                    </item>
                    <item>
                     <property name="text">
-                     <string>s10</string>
+                     <string>s2</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>s11</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s12</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s13</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s14</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s15</string>
+                     <string>s3</string>
                     </property>
                    </item>
                   </widget>
                  </item>
                 </layout>
                </item>
-               <item row="4" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_87">
+               <item row="2" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_62">
                  <item>
-                  <widget class="QLabel" name="label_87">
+                  <widget class="QLabel" name="label_62">
+                   <property name="text">
+                    <string>Max Throttle ADC Value</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="max_throttle_adc">
+                   <property name="minimum">
+                    <number>0</number>
+                   </property>
+                   <property name="maximum">
+                    <number>65535</number>
+                   </property>
+                   <property name="value">
+                    <number>0</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="5" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_63">
+                 <item>
+                  <widget class="QLabel" name="label_63">
+                   <property name="text">
+                    <string>Max Throttle Servo Value</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="max_throttle_servo">
+                   <property name="maximum">
+                    <number>65535</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="7" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_93">
+                 <item>
+                  <widget class="QLabel" name="label_93">
                    <property name="text">
                     <string>Throttle Reverse Direction</string>
                    </property>
@@ -1210,7 +1024,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="ThrottleReverse">
+                  <widget class="QComboBox" name="throttle_reverse">
                    <property name="currentIndex">
                     <number>1</number>
                    </property>
@@ -1228,37 +1042,10 @@
                  </item>
                 </layout>
                </item>
-               <item row="2" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_45">
-                 <item>
-                  <widget class="QLabel" name="label_45">
-                   <property name="text">
-                    <string>Max Throttle ADC Value</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="MaxThrottleADCValue">
-                   <property name="minimum">
-                    <number>0</number>
-                   </property>
-                   <property name="maximum">
-                    <number>65535</number>
-                   </property>
-                   <property name="value">
-                    <number>0</number>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
                <item row="3" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_44">
+                <layout class="QHBoxLayout" name="horizontalLayout_67">
                  <item>
-                  <widget class="QLabel" name="label_44">
+                  <widget class="QLabel" name="label_67">
                    <property name="text">
                     <string>Min Throttle ADC Value</string>
                    </property>
@@ -1268,7 +1055,28 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MinThrottleADCValue">
+                  <widget class="QSpinBox" name="min_throttle_adc">
+                   <property name="maximum">
+                    <number>65535</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="6" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_71">
+                 <item>
+                  <widget class="QLabel" name="label_71">
+                   <property name="text">
+                    <string>Min Throttle Servo Value</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="min_throttle_servo">
                    <property name="maximum">
                     <number>65535</number>
                    </property>
@@ -1297,8 +1105,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>205</width>
-                <height>180</height>
+                <width>737</width>
+                <height>422</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_17">
@@ -1315,10 +1123,15 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="ElevatorAnalogPin">
+                  <widget class="QComboBox" name="elevator_an_pin">
                    <property name="currentIndex">
-                    <number>3</number>
+                    <number>0</number>
                    </property>
+                   <item>
+                    <property name="text">
+                     <string>s0</string>
+                    </property>
+                   </item>
                    <item>
                     <property name="text">
                      <string>s1</string>
@@ -1326,32 +1139,12 @@
                    </item>
                    <item>
                     <property name="text">
-                     <string>s10</string>
+                     <string>s2</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>s11</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s12</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s13</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s14</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s15</string>
+                     <string>s3</string>
                     </property>
                    </item>
                   </widget>
@@ -1371,7 +1164,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MaxElevatorADCValue">
+                  <widget class="QSpinBox" name="max_elevator_adc">
                    <property name="minimum">
                     <number>0</number>
                    </property>
@@ -1398,7 +1191,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MaxElevatorServoValue">
+                  <widget class="QSpinBox" name="max_elevator_servo">
                    <property name="maximum">
                     <number>65535</number>
                    </property>
@@ -1419,7 +1212,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="ElevatorReverse">
+                  <widget class="QComboBox" name="elevator_reverse">
                    <property name="currentIndex">
                     <number>1</number>
                    </property>
@@ -1450,7 +1243,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MinElevatorADCValue">
+                  <widget class="QSpinBox" name="min_elevator_adc">
                    <property name="maximum">
                     <number>65535</number>
                    </property>
@@ -1471,7 +1264,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MinElevatorServoValue">
+                  <widget class="QSpinBox" name="min_elevator_servo">
                    <property name="maximum">
                     <number>65535</number>
                    </property>
@@ -1489,8 +1282,8 @@
           <attribute name="title">
            <string>Aileron Settings</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout_19">
-           <item row="0" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout_10">
+           <item>
             <widget class="QScrollArea" name="scrollArea_11">
              <property name="widgetResizable">
               <bool>true</bool>
@@ -1505,12 +1298,12 @@
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_18">
-               <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_52">
+               <item row="3" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_54">
                  <item>
-                  <widget class="QLabel" name="label_52">
+                  <widget class="QLabel" name="label_54">
                    <property name="text">
-                    <string>Aileron Analog Pin</string>
+                    <string>Min Aileron ADC Value</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1518,80 +1311,18 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="AileronAnalogPin">
-                   <property name="currentIndex">
-                    <number>3</number>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>s1</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s10</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s11</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s12</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s13</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s14</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s15</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="2" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_55">
-                 <item>
-                  <widget class="QLabel" name="label_55">
-                   <property name="text">
-                    <string>Max Aileron ADC Value</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="MaxAileronADCValue">
-                   <property name="minimum">
-                    <number>0</number>
-                   </property>
+                  <widget class="QSpinBox" name="min_aileron_adc">
                    <property name="maximum">
                     <number>65535</number>
-                   </property>
-                   <property name="value">
-                    <number>0</number>
                    </property>
                   </widget>
                  </item>
                 </layout>
                </item>
                <item row="5" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_57">
+                <layout class="QHBoxLayout" name="horizontalLayout_53">
                  <item>
-                  <widget class="QLabel" name="label_57">
+                  <widget class="QLabel" name="label_53">
                    <property name="text">
                     <string>Max Aileron Servo Value</string>
                    </property>
@@ -1601,7 +1332,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MaxAileronServoValue">
+                  <widget class="QSpinBox" name="max_aileron_servo">
                    <property name="maximum">
                     <number>65535</number>
                    </property>
@@ -1622,7 +1353,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="AileronReverse">
+                  <widget class="QComboBox" name="aileron_reverse">
                    <property name="currentIndex">
                     <number>1</number>
                    </property>
@@ -1640,12 +1371,12 @@
                  </item>
                 </layout>
                </item>
-               <item row="3" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_54">
+               <item row="0" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_49">
                  <item>
-                  <widget class="QLabel" name="label_54">
+                  <widget class="QLabel" name="label_49">
                    <property name="text">
-                    <string>Min Aileron ADC Value</string>
+                    <string>Aileron Analog Pin</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1653,18 +1384,65 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MinAileronADCValue">
+                  <widget class="QComboBox" name="aileron_an_pin">
+                   <property name="currentIndex">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>s0</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>s1</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>s2</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>s3</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="2" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_52">
+                 <item>
+                  <widget class="QLabel" name="label_52">
+                   <property name="text">
+                    <string>Max Aileron ADC Value</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="max_aileron_adc">
+                   <property name="minimum">
+                    <number>0</number>
+                   </property>
                    <property name="maximum">
                     <number>65535</number>
+                   </property>
+                   <property name="value">
+                    <number>0</number>
                    </property>
                   </widget>
                  </item>
                 </layout>
                </item>
                <item row="6" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_56">
+                <layout class="QHBoxLayout" name="horizontalLayout_55">
                  <item>
-                  <widget class="QLabel" name="label_56">
+                  <widget class="QLabel" name="label_55">
                    <property name="text">
                     <string>Min Aileron Servo Value</string>
                    </property>
@@ -1674,7 +1452,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MinAileronServoValue">
+                  <widget class="QSpinBox" name="min_aileron_servo">
                    <property name="maximum">
                     <number>65535</number>
                    </property>
@@ -1692,8 +1470,8 @@
           <attribute name="title">
            <string>Rudder Settings</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout_23">
-           <item row="0" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout_11">
+           <item>
             <widget class="QScrollArea" name="scrollArea_12">
              <property name="widgetResizable">
               <bool>true</bool>
@@ -1703,15 +1481,15 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>200</width>
-                <height>180</height>
+                <width>737</width>
+                <height>422</height>
                </rect>
               </property>
-              <layout class="QGridLayout" name="gridLayout_22">
+              <layout class="QGridLayout" name="gridLayout_19">
                <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_58">
+                <layout class="QHBoxLayout" name="horizontalLayout_56">
                  <item>
-                  <widget class="QLabel" name="label_58">
+                  <widget class="QLabel" name="label_56">
                    <property name="text">
                     <string>Rudder Analog Pin</string>
                    </property>
@@ -1721,10 +1499,15 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="RudderAnalogPin">
+                  <widget class="QComboBox" name="rudder_an_pin">
                    <property name="currentIndex">
-                    <number>3</number>
+                    <number>0</number>
                    </property>
+                   <item>
+                    <property name="text">
+                     <string>s0</string>
+                    </property>
+                   </item>
                    <item>
                     <property name="text">
                      <string>s1</string>
@@ -1732,32 +1515,12 @@
                    </item>
                    <item>
                     <property name="text">
-                     <string>s10</string>
+                     <string>s2</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>s11</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s12</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s13</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s14</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s15</string>
+                     <string>s3</string>
                     </property>
                    </item>
                   </widget>
@@ -1765,9 +1528,9 @@
                 </layout>
                </item>
                <item row="2" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_61">
+                <layout class="QHBoxLayout" name="horizontalLayout_57">
                  <item>
-                  <widget class="QLabel" name="label_61">
+                  <widget class="QLabel" name="label_57">
                    <property name="text">
                     <string>Max Rudder ADC Value</string>
                    </property>
@@ -1777,7 +1540,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MaxRudderADCValue">
+                  <widget class="QSpinBox" name="max_rudder_adc">
                    <property name="minimum">
                     <number>0</number>
                    </property>
@@ -1792,9 +1555,9 @@
                 </layout>
                </item>
                <item row="5" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_63">
+                <layout class="QHBoxLayout" name="horizontalLayout_58">
                  <item>
-                  <widget class="QLabel" name="label_63">
+                  <widget class="QLabel" name="label_58">
                    <property name="text">
                     <string>Max Rudder Servo Value</string>
                    </property>
@@ -1804,7 +1567,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MaxRudderServoValue">
+                  <widget class="QSpinBox" name="max_rudder_servo">
                    <property name="maximum">
                     <number>65535</number>
                    </property>
@@ -1813,9 +1576,9 @@
                 </layout>
                </item>
                <item row="7" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_93">
+                <layout class="QHBoxLayout" name="horizontalLayout_90">
                  <item>
-                  <widget class="QLabel" name="label_93">
+                  <widget class="QLabel" name="label_90">
                    <property name="text">
                     <string>Rudder Reverse Direction</string>
                    </property>
@@ -1825,7 +1588,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="RudderReverse">
+                  <widget class="QComboBox" name="rudder_reverse">
                    <property name="currentIndex">
                     <number>1</number>
                    </property>
@@ -1844,9 +1607,9 @@
                 </layout>
                </item>
                <item row="3" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_60">
+                <layout class="QHBoxLayout" name="horizontalLayout_59">
                  <item>
-                  <widget class="QLabel" name="label_60">
+                  <widget class="QLabel" name="label_59">
                    <property name="text">
                     <string>Min Rudder ADC Value</string>
                    </property>
@@ -1856,7 +1619,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MinRudderADCValue">
+                  <widget class="QSpinBox" name="min_rudder_adc">
                    <property name="maximum">
                     <number>65535</number>
                    </property>
@@ -1865,9 +1628,9 @@
                 </layout>
                </item>
                <item row="6" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_62">
+                <layout class="QHBoxLayout" name="horizontalLayout_60">
                  <item>
-                  <widget class="QLabel" name="label_62">
+                  <widget class="QLabel" name="label_60">
                    <property name="text">
                     <string>Min Rudder Servo Value</string>
                    </property>
@@ -1877,7 +1640,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MinRudderServoValue">
+                  <widget class="QSpinBox" name="min_rudder_servo">
                    <property name="maximum">
                     <number>65535</number>
                    </property>
@@ -1926,54 +1689,6 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_2">
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_64">
-                 <item>
-                  <widget class="QLabel" name="label_64">
-                   <property name="text">
-                    <string>Debug Port</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QComboBox" name="IFCDebugPort">
-                   <item>
-                    <property name="text">
-                     <string>USB</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Serial1</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Serial2</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Serial3</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Serial4</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Serial5</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_65">
                  <item>
                   <widget class="QLabel" name="label_65">
@@ -1986,7 +1701,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="IFCCommandPort">
+                  <widget class="QComboBox" name="ifc_command_port">
                    <item>
                     <property name="text">
                      <string>USB</string>
@@ -2015,6 +1730,21 @@
                    <item>
                     <property name="text">
                      <string>Serial5</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial6</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial7</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial8</string>
                     </property>
                    </item>
                   </widget>
@@ -2022,11 +1752,18 @@
                 </layout>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_67">
+                <layout class="QHBoxLayout" name="horizontalLayout_64">
                  <item>
-                  <widget class="QLabel" name="label_67">
+                  <widget class="QCheckBox" name="enable_ifc_debugging">
                    <property name="text">
-                    <string>GPS Port</string>
+                    <string>Enable Debugging</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_64">
+                   <property name="text">
+                    <string>Debug Port</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2034,7 +1771,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="IFCGPSPort">
+                  <widget class="QComboBox" name="ifc_debug_port">
                    <item>
                     <property name="text">
                      <string>USB</string>
@@ -2065,52 +1802,19 @@
                      <string>Serial5</string>
                     </property>
                    </item>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_68">
-                 <item>
-                  <widget class="QLabel" name="label_68">
-                   <property name="text">
-                    <string>LiDAR Port</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QComboBox" name="IFCLiDARPort">
                    <item>
                     <property name="text">
-                     <string>USB</string>
+                     <string>Serial6</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>Serial1</string>
+                     <string>Serial7</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>Serial2</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Serial3</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Serial4</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Serial5</string>
+                     <string>Serial8</string>
                     </property>
                    </item>
                   </widget>
@@ -2119,6 +1823,13 @@
                </item>
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_66">
+                 <item>
+                  <widget class="QCheckBox" name="enable_ifc_telem">
+                   <property name="text">
+                    <string>Enable Telemetry</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item>
                   <widget class="QLabel" name="label_66">
                    <property name="text">
@@ -2130,7 +1841,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="IFCTelemetryPort">
+                  <widget class="QComboBox" name="ifc_telem_port">
                    <item>
                     <property name="text">
                      <string>USB</string>
@@ -2159,6 +1870,21 @@
                    <item>
                     <property name="text">
                      <string>Serial5</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial6</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial7</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Serial8</string>
                     </property>
                    </item>
                   </widget>
@@ -2196,7 +1922,7 @@
                  <item>
                   <widget class="QLabel" name="label_74">
                    <property name="text">
-                    <string>Elevator Pin</string>
+                    <string>Elevator Servo Pin</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2204,7 +1930,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="ElevatorPin">
+                  <widget class="QComboBox" name="elevator_servo_pin">
                    <item>
                     <property name="text">
                      <string>s0</string>
@@ -2294,7 +2020,7 @@
                  <item>
                   <widget class="QLabel" name="label_92">
                    <property name="text">
-                    <string>Aileron Pin</string>
+                    <string>Aileron Servo Pin</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2302,7 +2028,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="AileronPin">
+                  <widget class="QComboBox" name="aileron_servo_pin">
                    <item>
                     <property name="text">
                      <string>s0</string>
@@ -2392,7 +2118,7 @@
                  <item>
                   <widget class="QLabel" name="label_91">
                    <property name="text">
-                    <string>Rudder Pin</string>
+                    <string>Rudder Servo Pin</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2400,7 +2126,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="RudderPin">
+                  <widget class="QComboBox" name="rudder_servo_pin">
                    <item>
                     <property name="text">
                      <string>s0</string>
@@ -2490,7 +2216,7 @@
                  <item>
                   <widget class="QLabel" name="label_72">
                    <property name="text">
-                    <string>Throttle Pin</string>
+                    <string>Throttle Servo Pin</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2498,7 +2224,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="ThrottlePin">
+                  <widget class="QComboBox" name="throttle_servo_pin">
                    <item>
                     <property name="text">
                      <string>s0</string>
@@ -2589,6 +2315,496 @@
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="tab">
+          <attribute name="title">
+           <string>Sensor Settings</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <widget class="QTabWidget" name="tabWidget">
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="tab_2">
+              <attribute name="title">
+               <string>GPS</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <item>
+                <widget class="QScrollArea" name="scrollArea_13">
+                 <property name="widgetResizable">
+                  <bool>true</bool>
+                 </property>
+                 <widget class="QWidget" name="scrollAreaWidgetContents_13">
+                  <property name="geometry">
+                   <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>713</width>
+                    <height>378</height>
+                   </rect>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_27">
+                   <item row="1" column="0">
+                    <layout class="QHBoxLayout" name="horizontalLayout_7">
+                     <item>
+                      <widget class="QLabel" name="label_8">
+                       <property name="text">
+                        <string>Enable NMEA Sentences:</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <layout class="QVBoxLayout" name="verticalLayout_4">
+                       <item>
+                        <widget class="QCheckBox" name="enable_gpgga">
+                         <property name="text">
+                          <string>GPGGA</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QCheckBox" name="enable_gpgll">
+                         <property name="text">
+                          <string>GPGLL</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QCheckBox" name="enable_gpglv">
+                         <property name="text">
+                          <string>GPGLV</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QCheckBox" name="enable_gpgsa">
+                         <property name="text">
+                          <string>GPGSA</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QCheckBox" name="enable_gprmc">
+                         <property name="text">
+                          <string>GPRMC</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QCheckBox" name="enable_gpvtg">
+                         <property name="text">
+                          <string>GPVTG</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </item>
+                   <item row="0" column="0">
+                    <layout class="QHBoxLayout" name="horizontalLayout_68">
+                     <item>
+                      <widget class="QCheckBox" name="enable_gps">
+                       <property name="text">
+                        <string>Enable GPS</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_68">
+                       <property name="text">
+                        <string>GPS Port</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QComboBox" name="gps_port">
+                       <item>
+                        <property name="text">
+                         <string>USB</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial1</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial2</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial3</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial4</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial5</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial6</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial7</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial8</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_9">
+                       <property name="text">
+                        <string>Report Rate (Hz)</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QSpinBox" name="gps_report_rate">
+                       <property name="minimum">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <number>10</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_7">
+                       <property name="text">
+                        <string>Timeout (ms)</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QSpinBox" name="gps_timeout">
+                       <property name="minimum">
+                        <number>10</number>
+                       </property>
+                       <property name="maximum">
+                        <number>2000</number>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_7">
+              <attribute name="title">
+               <string>LiDAR</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_6">
+               <item>
+                <widget class="QScrollArea" name="scrollArea_16">
+                 <property name="widgetResizable">
+                  <bool>true</bool>
+                 </property>
+                 <widget class="QWidget" name="scrollAreaWidgetContents_16">
+                  <property name="geometry">
+                   <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>713</width>
+                    <height>378</height>
+                   </rect>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_29">
+                   <item row="0" column="0">
+                    <layout class="QHBoxLayout" name="horizontalLayout_69">
+                     <item>
+                      <widget class="QCheckBox" name="enable_lidar">
+                       <property name="text">
+                        <string>Enable LiDAR</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_69">
+                       <property name="text">
+                        <string>LiDAR Port</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QComboBox" name="lidar_port">
+                       <item>
+                        <property name="text">
+                         <string>USB</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial1</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial2</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial3</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial4</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial5</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial6</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial7</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Serial8</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_83">
+                       <property name="text">
+                        <string>LiDAR Fixed Mount</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QComboBox" name="lidar_fixed_mount">
+                       <property name="currentIndex">
+                        <number>1</number>
+                       </property>
+                       <item>
+                        <property name="text">
+                         <string>True</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>False</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_10">
+              <attribute name="title">
+               <string>IMU</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <item>
+                <widget class="QScrollArea" name="scrollArea_17">
+                 <property name="widgetResizable">
+                  <bool>true</bool>
+                 </property>
+                 <widget class="QWidget" name="scrollAreaWidgetContents_17">
+                  <property name="geometry">
+                   <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>713</width>
+                    <height>378</height>
+                   </rect>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_33">
+                   <item row="0" column="0">
+                    <layout class="QHBoxLayout" name="horizontalLayout_70">
+                     <item>
+                      <widget class="QCheckBox" name="enable_imu">
+                       <property name="text">
+                        <string>Enable IMU</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_70">
+                       <property name="text">
+                        <string>IMU Port</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QComboBox" name="imu_port">
+                       <item>
+                        <property name="text">
+                         <string>Wire</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Wire1</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Wire2</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_5">
+                       <property name="text">
+                        <string>IMU Address</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QSpinBox" name="imu_address">
+                       <property name="maximum">
+                        <number>255</number>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_11">
+              <attribute name="title">
+               <string>Pitot</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_9">
+               <item>
+                <widget class="QScrollArea" name="scrollArea_18">
+                 <property name="widgetResizable">
+                  <bool>true</bool>
+                 </property>
+                 <widget class="QWidget" name="scrollAreaWidgetContents_18">
+                  <property name="geometry">
+                   <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>713</width>
+                    <height>378</height>
+                   </rect>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_35">
+                   <item row="0" column="0">
+                    <layout class="QHBoxLayout" name="horizontalLayout_86">
+                     <item>
+                      <widget class="QCheckBox" name="enable_pitot">
+                       <property name="text">
+                        <string>Enable Pitot</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_86">
+                       <property name="text">
+                        <string>Pitot Tube Analog Pin</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QComboBox" name="pitot_pin">
+                       <property name="currentIndex">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <property name="text">
+                         <string>s0</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>s1</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>s2</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>s3</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
          <widget class="QWidget" name="SharedAileronSettings_3">
           <attribute name="title">
            <string>Autopilot Settings</string>
@@ -2604,8 +2820,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>187</width>
-                <height>254</height>
+                <width>737</width>
+                <height>422</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_30">
@@ -2622,7 +2838,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MaxPitchUpAngle">
+                  <widget class="QSpinBox" name="max_pitch_up">
                    <property name="minimum">
                     <number>-90</number>
                    </property>
@@ -2646,7 +2862,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MaxPitchDownAngle">
+                  <widget class="QSpinBox" name="max_pitch_down">
                    <property name="minimum">
                     <number>-90</number>
                    </property>
@@ -2670,7 +2886,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="UnsafeRollLeftAngle">
+                  <widget class="QSpinBox" name="unsafe_roll_left">
                    <property name="minimum">
                     <number>-90</number>
                    </property>
@@ -2694,7 +2910,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="UnsafePitchUpAngle">
+                  <widget class="QSpinBox" name="unsafe_pitch_up">
                    <property name="minimum">
                     <number>-90</number>
                    </property>
@@ -2718,7 +2934,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MaxRollLeftAngle">
+                  <widget class="QSpinBox" name="max_roll_left">
                    <property name="minimum">
                     <number>-90</number>
                    </property>
@@ -2755,7 +2971,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="UnsafeRollRightAngle">
+                  <widget class="QSpinBox" name="unsafe_roll_right">
                    <property name="minimum">
                     <number>-90</number>
                    </property>
@@ -2779,7 +2995,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="MaxRollRightAngle">
+                  <widget class="QSpinBox" name="max_roll_right">
                    <property name="minimum">
                     <number>-90</number>
                    </property>
@@ -2803,7 +3019,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="UnsafePitchDownAngle">
+                  <widget class="QSpinBox" name="unsafe_pitch_down">
                    <property name="minimum">
                     <number>-90</number>
                    </property>
@@ -2846,119 +3062,6 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_9">
-          <attribute name="title">
-           <string>Other Settings</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_34">
-           <item row="0" column="0">
-            <widget class="QScrollArea" name="scrollArea_16">
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents_16">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>171</width>
-                <height>68</height>
-               </rect>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_29">
-               <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_82">
-                 <item>
-                  <widget class="QLabel" name="label_82">
-                   <property name="text">
-                    <string>Pitot Tube Analog Pin</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QComboBox" name="PitotTubeAnalogPin">
-                   <property name="currentIndex">
-                    <number>3</number>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>s1</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s10</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s11</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s12</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s13</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s14</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>s15</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="1" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_83">
-                 <item>
-                  <widget class="QLabel" name="label_83">
-                   <property name="text">
-                    <string>LiDAR Fixed Mount</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QComboBox" name="LiDARFixedMount">
-                   <property name="currentIndex">
-                    <number>1</number>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>True</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>False</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-            </widget>
-           </item>
-          </layout>
-         </widget>
         </widget>
        </item>
       </layout>
@@ -2966,7 +3069,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="GetCurrentValues">
+    <widget class="QPushButton" name="get_current_values">
      <property name="text">
       <string>Get Current Values</string>
      </property>

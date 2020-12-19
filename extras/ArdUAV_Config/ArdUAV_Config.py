@@ -29,22 +29,22 @@ boolStr_to_digStr = {'True':  '1',
                      'False': '0'}
 digStr_to_boolStr = reverse_dict(boolStr_to_digStr)
 
-dNum_to_index = {'2':  0,
-                 '39': 1,
-                 '6':  2,
-                 '24': 3,
-                 '25': 4,
-                 '26': 5,
-                 '27': 6,
-                 '28': 7,
-                 '29': 8,
-                 '30': 9,
-                 '23': 10,
-                 '22': 11,
-                 '17': 12,
-                 '16': 13,
-                 '14': 14,
-                 '36': 15}
+dNum_to_index = {'22': 0,
+                 '23': 1,
+                 '40': 2,
+                 '41': 3,
+                 '2':  4,
+                 '3':  5,
+                 '4':  6,
+                 '5':  7,
+                 '6':  8,
+                 '9':  9,
+                 '30': 10,
+                 '31': 11,
+                 '32': 12,
+                 '33': 13,
+                 '36': 14,
+                 '37': 15}
 index_to_dNum = reverse_dict(dNum_to_index)
 
 sNum_to_index = {'s0':  0,
@@ -65,40 +65,34 @@ sNum_to_index = {'s0':  0,
                  's15': 15}
 index_to_sNum = reverse_dict(sNum_to_index)
 
-sNum_to_dNum = {'s0':  '2',
-                's1':  '39',
-                's2':  '6',
-                's3':  '24',
-                's4':  '25',
-                's5':  '26',
-                's6':  '27',
-                's7':  '28',
-                's8':  '29',
-                's9':  '30',
-                's10': '23',
-                's11': '22',
-                's12': '17',
-                's13': '16',
-                's14': '14',
-                's15': '36'}
+sNum_to_dNum = {'s0':  '22',
+                's1':  '23',
+                's2':  '40',
+                's3':  '41',
+                's4':  '2',
+                's5':  '3',
+                's6':  '4',
+                's7':  '5',
+                's8':  '6',
+                's9':  '9',
+                's10': '30',
+                's11': '31',
+                's12': '32',
+                's13': '33',
+                's14': '36',
+                's15': '37'}
 dNum_to_sNum = reverse_dict(sNum_to_dNum)
 
-aNum_to_index = {'A20': 0,
+aNum_to_index = {'A8':  0,
                  'A9':  1,
-                 'A8':  2,
-                 'A3':  3,
-                 'A2':  4,
-                 'A0':  5,
-                 'A17': 6}
+                 'A16': 2,
+                 'A17': 3}
 index_to_aNum = reverse_dict(aNum_to_index)
 
-sNum_to_aNum = {'s1':  'A20',
-                's10': 'A9',
-                's11': 'A8',
-                's12': 'A3',
-                's13': 'A2',
-                's14': 'A0',
-                's15': 'A17'}
+sNum_to_aNum = {'s0': 'A8',
+                's1': 'A9',
+                's2': 'A16',
+                's3': 'A17'}
 aNum_to_sNum = reverse_dict(sNum_to_aNum)
 
 baudNum_to_baudIndex = {'300':     0,
@@ -124,8 +118,16 @@ portName_to_portNum = {'USB':     '0',
                        'Serial2': '2',
                        'Serial3': '3',
                        'Serial4': '4',
-                       'Serial5': '5'}
-portName_to_portIndex = reverse_dict(portName_to_portNum)
+                       'Serial5': '5',
+                       'Serial6': '6',
+                       'Serial7': '7',
+                       'Serial8': '8'}
+portNum_to_portName = reverse_dict(portName_to_portNum)
+
+i2c_portName_to_portIndex = {'Wire':  0,
+                             'Wire1': 1,
+                             'Wire2': 2}
+i2c_portIndex_to_portName = reverse_dict(i2c_portName_to_portIndex)
 
 
 class AppWindow(QDialog):
@@ -142,144 +144,165 @@ class AppWindow(QDialog):
         if not os.path.exists("configs"):
             os.makedirs("configs")
 
-        self.sharedToolsFilename = os.path.join(self.BASE_LIBRARY_PATH, "Shared_Tools.h")
-        self.GSToolsFilename     = os.path.join(self.BASE_LIBRARY_PATH, "GS_Tools.h")
-        self.GSSerialFilename    = os.path.join(self.BASE_LIBRARY_PATH, "GS_Serial.h")
-        self.IFCToolsFilename    = os.path.join(self.BASE_LIBRARY_PATH, "IFC_Tools.h")
-        self.IFCSerialFilename   = os.path.join(self.BASE_LIBRARY_PATH, "IFC_Serial.h")
+        self.shared_tools_filename = os.path.join(self.BASE_LIBRARY_PATH, "Shared_Tools.h")
 
-        self.currentParameters = {'SharedTools': {'SerialSettings': {'Debug_Port_Baud': "",
-                                                                     'Command_Port_Baud': "",
-                                                                     'GPS_Port_Baud': "",
-                                                                     'LiDAR_Port_Baud': "",
-                                                                     'Telemetry_Port_Baud': ""},
-                                                  'Reporting_TimeoutSettings': {'CommandReportingRate': "",
-                                                                                'TelemetryReportingRate': "",
-                                                                                'LossLinkTimeout': ""},
-                                                  'ThrottleSettings': {'MaxThrottleValue': "",
-                                                                       'MinThrottleValue': ""},
-                                                  'ElevatorSettings': {'MaxElevatorValue': "",
-                                                                       'MinElevatorValue': ""},
-                                                  'AileronSettings': {'MaxAileronValue': "",
-                                                                      'MinAileronValue': ""},
-                                                  'RudderSettings': {'MaxRudderValue': "",
-                                                                     'MinRudderValue': ""}},
-                                  'GSTools': {'SerialSettings': {'GS_DebugPortNumber': "",
-                                                                 'GS_CommandPortNumber': "",
-                                                                 'GS_TelemetryPortNumber': ""},
-                                              'ThrottleSettings': {'ThrottleAnalogPin': "",
-                                                                   'MinThrottleADCValue': "",
-                                                                   'MaxThrottleADCValue': "",
-                                                                   'ThrottleReverse': ""},
-                                              'ElevatorSettings': {'ElevatorAnalogPin': "",
-                                                                   'MinElevatorADCValue': "",
-                                                                   'MaxElevatorADCValue': "",
-                                                                   'MinElevatorServoValue': "",
-                                                                   'MaxElevatorServoValue': "",
-                                                                   'ElevatorReverse': ""},
-                                              'AileronSettings': {'AileronAnalogPin': "",
-                                                                  'MinAileronADCValue': "",
-                                                                  'MaxAileronADCValue': "",
-                                                                  'MinAileronServoValue': "",
-                                                                  'MaxAileronServoValue': "",
-                                                                  'AileronReverse': ""},
-                                              'RudderSettings': {'RudderAnalogPin': "",
-                                                                 'MinRudderADCValue': "",
-                                                                 'MaxRudderADCValue': "",
-                                                                 'MinRudderServoValue': "",
-                                                                 'MaxRudderServoValue': "",
-                                                                 'RudderReverse': ""}},
-                                  'IFCTools': {'SerialSettings': {'IFC_DebugPortNumber': "",
-                                                                  'IFC_CommandPortNumber': "",
-                                                                  'IFC_GPSPortNumber': "",
-                                                                  'IFC_LiDARPortNumber': "",
-                                                                  'IFC_TelemetryPortNumber': ""},
-                                               'ControlSurfaceSettings': {'ThrottlePin': "",
-                                                                          'ElevatorPin': "",
-                                                                          'AileronPin': "",
-                                                                          'RudderPin': ""},
-                                               'AutopilotSettings': {'UnsafeRollRightAngle': "",
-                                                                     'UnsafeRollLeftAngle': "",
-                                                                     'MaxRollRightAngle': "",
-                                                                     'MaxRollLeftAngle': "",
-                                                                     'UnsafePitchUpAngle': "",
-                                                                     'UnsafePitchDownAngle': "",
-                                                                     'MaxPitchUpAngle': "",
-                                                                     'MaxPitchDownAngle': ""},
-                                               'OtherSettings': {'PitotTubeAnalogPin': "",
-                                                                 'LiDARFixedMount': ""}}}
+        self.currentParameters = {'shared_tools': {'serial_settings': {'debug_baud': "",
+                                                                       'command_baud': "",
+                                                                       'gps_baud': "",
+                                                                       'lidar_baud': "",
+                                                                       'telem_baud': ""},
+                                                   'reporting_timeout_settings': {'command_report_rate': "",
+                                                                                  'telem_report_rate': "",
+                                                                                  'loss_link_timeout': ""}},
+                                  'gs_tools': {'serial_settings': {'gs_command_port': "",
+                                                                   'gs_debug_enable': "",
+                                                                   'gs_debug_port': "",
+                                                                   'gs_telem_enable': "",
+                                                                   'gs_telem_port': ""},
+                                               'throttle_settings': {'throttle_an_pin': "",
+                                                                     'max_throttle_adc': "",
+                                                                     'min_throttle_adc': "",
+                                                                     'max_throttle_servo': "",
+                                                                     'min_throttle_servo': "",
+                                                                     'throttle_reverse': ""},
+                                               'elevator_settings': {'elevator_an_pin': "",
+                                                                     'max_elevator_adc': "",
+                                                                     'min_elevator_adc': "",
+                                                                     'max_elevator_servo': "",
+                                                                     'min_elevator_servo': "",
+                                                                     'elevator_reverse': ""},
+                                               'aileron_settings': {'aileron_an_pin': "",
+                                                                    'max_aileron_adc': "",
+                                                                    'min_aileron_adc': "",
+                                                                    'max_aileron_servo': "",
+                                                                    'min_aileron_servo': "",
+                                                                    'aileron_reverse': ""},
+                                               'rudder_settings': {'rudder_an_pin': "",
+                                                                   'max_rudder_adc': "",
+                                                                   'min_rudder_adc': "",
+                                                                   'max_rudder_servo': "",
+                                                                   'min_rudder_servo': "",
+                                                                   'rudder_reverse': ""}},
+                                  'ifc_tools': {'serial_settings': {'ifc_command_port': "",
+                                                                    'ifc_debug_enable': "",
+                                                                    'ifc_debug_port': "",
+                                                                    'ifc_telem_enable': "",
+                                                                    'ifc_telem_port': ""},
+                                                'control_surface_settings': {'throttle_servo_pin': "",
+                                                                             'elevator_servo_pin': "",
+                                                                             'aileron_servo_pin': "",
+                                                                             'rudder_servo_pin': ""},
+                                                'sensor_settings': {'gps': {'enable_gps': "",
+                                                                            'gps_port': "",
+                                                                            'gps_report_rate': "",
+                                                                            'gps_timeout': "",
+                                                                            'enable_gpgga': "",
+                                                                            'enable_gpgll': "",
+                                                                            'enable_gpglv': "",
+                                                                            'enable_gpgsa': "",
+                                                                            'enable_gprmc': "",
+                                                                            'enable_gpvtg': ""},
+                                                                    'lidar': {'enable_lidar': "",
+                                                                              'lidar_port': "",
+                                                                              'lidar_fixed_mount': ""},
+                                                                    'imu': {'enable_imu': "",
+                                                                            'imu_port': "",
+                                                                            'imu_address': ""},
+                                                                    'pitot': {'enable_pitot': "",
+                                                                              'pitot_pin': ""}},
+                                                'autopilot_settings': {'unsafe_roll_right': "",
+                                                                       'unsafe_roll_left': "",
+                                                                       'max_roll_right': "",
+                                                                       'max_roll_left': "",
+                                                                       'unsafe_pitch_up': "",
+                                                                       'unsafe_pitch_down': "",
+                                                                       'max_pitch_up': "",
+                                                                       'max_pitch_down': ""}}}
         self.get_parameters()
 
     def setup_signals(self):
-        self.ui.GetCurrentValues.clicked.connect(self.get_parameters)
+        self.ui.get_current_values.clicked.connect(self.get_parameters)
         self.ui.buttonBox.clicked.connect(self.handle_button_click)
         self.ui.load_config.clicked.connect(self.ingest_config)
         self.ui.save_config.clicked.connect(self.write_out_config)
         
         # Shared Settings
-        self.ui.Debug_Port_Baud.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.Command_Port_Baud.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.GPS_Port_Baud.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.LiDAR_Port_Baud.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.Telemetry_Port_Baud.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.CommandReportingRate.valueChanged.connect(self.update_param_dict)
-        self.ui.TelemetryReportingRate.valueChanged.connect(self.update_param_dict)
-        self.ui.LossLinkTimeout.valueChanged.connect(self.update_param_dict)
-        self.ui.MaxThrottleValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MinThrottleValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MaxElevatorValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MinElevatorValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MaxAileronValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MinAileronValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MaxRudderValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MinRudderValue.valueChanged.connect(self.update_param_dict)
+        self.ui.debug_baud.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.command_baud.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.gps_baud.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.lidar_baud.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.telem_baud.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.command_report_rate.valueChanged.connect(self.update_param_dict)
+        self.ui.telem_report_rate.valueChanged.connect(self.update_param_dict)
+        self.ui.loss_link_timeout.valueChanged.connect(self.update_param_dict)
         
         # GS Settings
-        self.ui.GSDebugPort.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.GSCommandPort.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.GSTelemetryPort.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.ThrottleAnalogPin.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.MinThrottleADCValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MaxThrottleADCValue.valueChanged.connect(self.update_param_dict)
-        self.ui.ElevatorAnalogPin.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.MinElevatorADCValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MaxElevatorADCValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MinElevatorServoValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MaxElevatorServoValue.valueChanged.connect(self.update_param_dict)
-        self.ui.AileronAnalogPin.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.MinAileronADCValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MinAileronServoValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MaxAileronServoValue.valueChanged.connect(self.update_param_dict)
-        self.ui.RudderAnalogPin.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.MinRudderADCValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MaxRudderADCValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MinRudderServoValue.valueChanged.connect(self.update_param_dict)
-        self.ui.MaxRudderServoValue.valueChanged.connect(self.update_param_dict)
-        self.ui.ThrottleReverse.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.ElevatorReverse.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.AileronReverse.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.RudderReverse.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.gs_command_port.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.enable_gs_debugging.clicked.connect(self.update_param_dict)
+        self.ui.gs_debug_port.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.enable_gs_telem.clicked.connect(self.update_param_dict)
+        self.ui.gs_telem_port.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.throttle_an_pin.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.max_throttle_adc.valueChanged.connect(self.update_param_dict)
+        self.ui.min_throttle_adc.valueChanged.connect(self.update_param_dict)
+        self.ui.max_throttle_servo.valueChanged.connect(self.update_param_dict)
+        self.ui.min_throttle_servo.valueChanged.connect(self.update_param_dict)
+        self.ui.throttle_reverse.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.elevator_an_pin.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.max_elevator_adc.valueChanged.connect(self.update_param_dict)
+        self.ui.min_elevator_adc.valueChanged.connect(self.update_param_dict)
+        self.ui.max_elevator_servo.valueChanged.connect(self.update_param_dict)
+        self.ui.min_elevator_servo.valueChanged.connect(self.update_param_dict)
+        self.ui.elevator_reverse.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.aileron_an_pin.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.max_aileron_adc.valueChanged.connect(self.update_param_dict)
+        self.ui.min_aileron_adc.valueChanged.connect(self.update_param_dict)
+        self.ui.max_aileron_servo.valueChanged.connect(self.update_param_dict)
+        self.ui.min_aileron_servo.valueChanged.connect(self.update_param_dict)
+        self.ui.aileron_reverse.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.rudder_an_pin.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.max_rudder_adc.valueChanged.connect(self.update_param_dict)
+        self.ui.min_rudder_adc.valueChanged.connect(self.update_param_dict)
+        self.ui.max_rudder_servo.valueChanged.connect(self.update_param_dict)
+        self.ui.min_rudder_servo.valueChanged.connect(self.update_param_dict)
+        self.ui.rudder_reverse.currentIndexChanged.connect(self.update_param_dict)
         
         # IFC Settings
-        self.ui.IFCDebugPort.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.IFCCommandPort.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.IFCGPSPort.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.IFCLiDARPort.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.IFCTelemetryPort.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.ThrottlePin.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.ElevatorPin.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.AileronPin.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.RudderPin.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.UnsafeRollRightAngle.valueChanged.connect(self.update_param_dict)
-        self.ui.UnsafeRollLeftAngle.valueChanged.connect(self.update_param_dict)
-        self.ui.MaxRollRightAngle.valueChanged.connect(self.update_param_dict)
-        self.ui.MaxRollLeftAngle.valueChanged.connect(self.update_param_dict)
-        self.ui.UnsafePitchUpAngle.valueChanged.connect(self.update_param_dict)
-        self.ui.UnsafePitchDownAngle.valueChanged.connect(self.update_param_dict)
-        self.ui.MaxPitchUpAngle.valueChanged.connect(self.update_param_dict)
-        self.ui.MaxPitchDownAngle.valueChanged.connect(self.update_param_dict)
-        self.ui.PitotTubeAnalogPin.currentIndexChanged.connect(self.update_param_dict)
-        self.ui.LiDARFixedMount.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.ifc_command_port.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.enable_ifc_debugging.clicked.connect(self.update_param_dict)
+        self.ui.ifc_debug_port.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.enable_ifc_telem.clicked.connect(self.update_param_dict)
+        self.ui.ifc_telem_port.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.throttle_servo_pin.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.elevator_servo_pin.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.aileron_servo_pin.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.rudder_servo_pin.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.enable_gps.clicked.connect(self.update_param_dict)
+        self.ui.gps_port.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.gps_report_rate.valueChanged.connect(self.update_param_dict)
+        self.ui.gps_timeout.valueChanged.connect(self.update_param_dict)
+        self.ui.enable_gpgga.clicked.connect(self.update_param_dict)
+        self.ui.enable_gpgll.clicked.connect(self.update_param_dict)
+        self.ui.enable_gpglv.clicked.connect(self.update_param_dict)
+        self.ui.enable_gpgsa.clicked.connect(self.update_param_dict)
+        self.ui.enable_gprmc.clicked.connect(self.update_param_dict)
+        self.ui.enable_gpvtg.clicked.connect(self.update_param_dict)
+        self.ui.enable_lidar.clicked.connect(self.update_param_dict)
+        self.ui.lidar_port.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.lidar_fixed_mount.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.enable_imu.clicked.connect(self.update_param_dict)
+        self.ui.imu_port.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.imu_address.valueChanged.connect(self.update_param_dict)
+        self.ui.enable_pitot.clicked.connect(self.update_param_dict)
+        self.ui.pitot_pin.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.unsafe_roll_right.valueChanged.connect(self.update_param_dict)
+        self.ui.unsafe_roll_left.valueChanged.connect(self.update_param_dict)
+        self.ui.max_roll_right.valueChanged.connect(self.update_param_dict)
+        self.ui.max_roll_left.valueChanged.connect(self.update_param_dict)
+        self.ui.unsafe_pitch_up.valueChanged.connect(self.update_param_dict)
+        self.ui.unsafe_pitch_down.valueChanged.connect(self.update_param_dict)
+        self.ui.max_pitch_up.valueChanged.connect(self.update_param_dict)
+        self.ui.max_pitch_down.valueChanged.connect(self.update_param_dict)
 
     def handle_button_click(self, button):
         sb = self.ui.buttonBox.standardButton(button)
@@ -295,116 +318,150 @@ class AppWindow(QDialog):
         try:
             if openfile:
                 with open(openfile, "r") as _file:
-                    self.currentParameters = json.loads(_file.read().replace("'", '"'))
-
-                self.update_gui()
-
-                print("--------------------------------")
-                print("Loaded config file: {}".format(os.path.basename(openfile)))
+                    tempParameters = json.loads(_file.read().replace("'", '"'))
+                    
+                copy = True
+                key_error = ''
+                
+                for keys_1 in tempParameters.keys():
+                    if keys_1 not in self.currentParameters.keys():
+                        copy = False
+                        key_error = keys_1
+                    
+                    for keys_2 in tempParameters[keys_1].keys():
+                        if keys_2 not in self.currentParameters[keys_1].keys():
+                            copy = False
+                            key_error = keys_2
+                        
+                        try:
+                            for keys_3 in tempParameters[keys_1][keys_2].keys():
+                                if keys_3 not in self.currentParameters[keys_1][keys_2].keys():
+                                    copy = False
+                                    key_error = keys_3
+                        except AttributeError:
+                            pass
+                
+                if copy:
+                    self.currentParameters = tempParameters
+                    self.update_gui()
+    
+                    print("--------------------------------")
+                    print("Loaded config file: {}".format(os.path.basename(openfile)))
+                else:
+                    print("--------------------------------")
+                    print("JSON key error: '{}' in config file: {}".format(key_error, os.path.basename(openfile)))
         except:
             import traceback
             traceback.print_exc()
     
     def update_param_dict(self):
         # Shared Settings
-        self.currentParameters['SharedTools']['SerialSettings']['Debug_Port_Baud']     = self.ui.Debug_Port_Baud.currentText()
-        self.currentParameters['SharedTools']['SerialSettings']['Command_Port_Baud']   = self.ui.Command_Port_Baud.currentText()
-        self.currentParameters['SharedTools']['SerialSettings']['GPS_Port_Baud']       = self.ui.GPS_Port_Baud.currentText()
-        self.currentParameters['SharedTools']['SerialSettings']['LiDAR_Port_Baud']     = self.ui.LiDAR_Port_Baud.currentText()
-        self.currentParameters['SharedTools']['SerialSettings']['Telemetry_Port_Baud'] = self.ui.Telemetry_Port_Baud.currentText()
-        self.currentParameters['SharedTools']['Reporting_TimeoutSettings']['CommandReportingRate']   = self.ui.CommandReportingRate.text()
-        self.currentParameters['SharedTools']['Reporting_TimeoutSettings']['TelemetryReportingRate'] = self.ui.TelemetryReportingRate.text()
-        self.currentParameters['SharedTools']['Reporting_TimeoutSettings']['LossLinkTimeout']        = self.ui.LossLinkTimeout.text()
-        self.currentParameters['SharedTools']['ThrottleSettings']['MaxThrottleValue']  = self.ui.MaxThrottleValue.text()
-        self.currentParameters['SharedTools']['AileronSettings']['MaxAileronValue']    = self.ui.MaxAileronValue.text()
-        self.currentParameters['SharedTools']['ElevatorSettings']['MaxElevatorValue']  = self.ui.MaxElevatorValue.text()
-        self.currentParameters['SharedTools']['RudderSettings']['MaxRudderValue']      = self.ui.MaxRudderValue.text()
-        self.currentParameters['SharedTools']['ThrottleSettings']['MinThrottleValue']  = self.ui.MinThrottleValue.text()
-        self.currentParameters['SharedTools']['AileronSettings']['MinAileronValue']    = self.ui.MinAileronValue.text()
-        self.currentParameters['SharedTools']['ElevatorSettings']['MinElevatorValue']  = self.ui.MinElevatorValue.text()
-        self.currentParameters['SharedTools']['RudderSettings']['MinRudderValue']      = self.ui.MinRudderValue.text()
+        self.currentParameters['shared_tools']['serial_settings']['debug_baud']         = self.ui.debug_baud.currentText()
+        self.currentParameters['shared_tools']['serial_settings']['command_baud']       = self.ui.command_baud.currentText()
+        self.currentParameters['shared_tools']['serial_settings']['gps_baud']           = self.ui.gps_baud.currentText()
+        self.currentParameters['shared_tools']['serial_settings']['lidar_baud']         = self.ui.lidar_baud.currentText()
+        self.currentParameters['shared_tools']['serial_settings']['telem_baud']         = self.ui.telem_baud.currentText()
+        self.currentParameters['shared_tools']['reporting_timeout_settings']['command_report_rate'] = self.ui.command_report_rate.text()
+        self.currentParameters['shared_tools']['reporting_timeout_settings']['telem_report_rate']   = self.ui.telem_report_rate.text()
+        self.currentParameters['shared_tools']['reporting_timeout_settings']['loss_link_timeout']   = self.ui.loss_link_timeout.text()
 
         #GS Settings
-        self.currentParameters['GSTools']['SerialSettings']['GS_DebugPortNumber']      = portName_to_portNum[self.ui.GSDebugPort.currentText()]
-        self.currentParameters['GSTools']['SerialSettings']['GS_CommandPortNumber']    = portName_to_portNum[self.ui.GSCommandPort.currentText()]
-        self.currentParameters['GSTools']['SerialSettings']['GS_TelemetryPortNumber']  = portName_to_portNum[self.ui.GSTelemetryPort.currentText()]
-        self.currentParameters['GSTools']['RudderSettings']['RudderAnalogPin']         = sNum_to_aNum[self.ui.RudderAnalogPin.currentText()]
-        self.currentParameters['GSTools']['ThrottleSettings']['ThrottleAnalogPin']     = sNum_to_aNum[self.ui.ThrottleAnalogPin.currentText()]
-        self.currentParameters['GSTools']['AileronSettings']['AileronAnalogPin']       = sNum_to_aNum[self.ui.AileronAnalogPin.currentText()]
-        self.currentParameters['GSTools']['ElevatorSettings']['ElevatorAnalogPin']     = sNum_to_aNum[self.ui.ElevatorAnalogPin.currentText()]
-        self.currentParameters['GSTools']['AileronSettings']['MaxAileronServoValue']   = self.ui.MaxAileronServoValue.text()
-        self.currentParameters['GSTools']['ElevatorSettings']['MaxElevatorServoValue'] = self.ui.MaxElevatorServoValue.text()
-        self.currentParameters['GSTools']['RudderSettings']['MaxRudderServoValue']     = self.ui.MaxRudderServoValue.text()
-        self.currentParameters['GSTools']['AileronSettings']['MinAileronServoValue']   = self.ui.MinAileronServoValue.text()
-        self.currentParameters['GSTools']['ElevatorSettings']['MinElevatorServoValue'] = self.ui.MinElevatorServoValue.text()
-        self.currentParameters['GSTools']['RudderSettings']['MinRudderServoValue']     = self.ui.MinRudderServoValue.text()
-        self.currentParameters['GSTools']['ThrottleSettings']['MinThrottleADCValue']   = self.ui.MinThrottleADCValue.text()
-        self.currentParameters['GSTools']['AileronSettings']['MinAileronADCValue']     = self.ui.MinAileronADCValue.text()
-        self.currentParameters['GSTools']['ElevatorSettings']['MinElevatorADCValue']   = self.ui.MinElevatorADCValue.text()
-        self.currentParameters['GSTools']['RudderSettings']['MinRudderADCValue']       = self.ui.MinRudderADCValue.text()
-        self.currentParameters['GSTools']['ThrottleSettings']['MaxThrottleADCValue']   = self.ui.MaxThrottleADCValue.text()
-        self.currentParameters['GSTools']['AileronSettings']['MaxAileronADCValue']     = self.ui.MaxAileronADCValue.text()
-        self.currentParameters['GSTools']['ElevatorSettings']['MaxElevatorADCValue']   = self.ui.MaxElevatorADCValue.text()
-        self.currentParameters['GSTools']['RudderSettings']['MaxRudderADCValue']       = self.ui.MaxRudderADCValue.text()
-        self.currentParameters['GSTools']['AileronSettings']['AileronReverse']         = boolStr_to_digStr[self.ui.AileronReverse.currentText()]
-        self.currentParameters['GSTools']['ElevatorSettings']['ElevatorReverse']       = boolStr_to_digStr[self.ui.ElevatorReverse.currentText()]
-        self.currentParameters['GSTools']['RudderSettings']['RudderReverse']           = boolStr_to_digStr[self.ui.RudderReverse.currentText()]
-        self.currentParameters['GSTools']['ThrottleSettings']['ThrottleReverse']       = boolStr_to_digStr[self.ui.ThrottleReverse.currentText()]
+        self.currentParameters['gs_tools']['serial_settings']['gs_command_port']        = self.ui.gs_command_port.currentText()
+        self.currentParameters['gs_tools']['serial_settings']['gs_debug_enable']        = str(self.ui.enable_gs_debugging.isChecked())
+        self.currentParameters['gs_tools']['serial_settings']['gs_debug_port']          = self.ui.gs_debug_port.currentText()
+        self.currentParameters['gs_tools']['serial_settings']['gs_telem_enable']        = str(self.ui.enable_gs_telem.isChecked())
+        self.currentParameters['gs_tools']['serial_settings']['gs_telem_port']          = self.ui.gs_telem_port.currentText()
+        self.currentParameters['gs_tools']['throttle_settings']['throttle_an_pin']      = self.ui.throttle_an_pin.currentText()
+        self.currentParameters['gs_tools']['throttle_settings']['max_throttle_adc']     = self.ui.max_throttle_adc.text()
+        self.currentParameters['gs_tools']['throttle_settings']['min_throttle_adc']     = self.ui.min_throttle_adc.text()
+        self.currentParameters['gs_tools']['throttle_settings']['max_throttle_servo']   = self.ui.max_throttle_servo.text()
+        self.currentParameters['gs_tools']['throttle_settings']['min_throttle_servo']   = self.ui.min_throttle_servo.text()
+        self.currentParameters['gs_tools']['throttle_settings']['throttle_reverse']     = self.ui.throttle_reverse.currentText()
+        self.currentParameters['gs_tools']['elevator_settings']['elevator_an_pin']      = self.ui.elevator_an_pin.currentText()
+        self.currentParameters['gs_tools']['elevator_settings']['max_elevator_adc']     = self.ui.max_elevator_adc.text()
+        self.currentParameters['gs_tools']['elevator_settings']['min_elevator_adc']     = self.ui.min_elevator_adc.text()
+        self.currentParameters['gs_tools']['elevator_settings']['max_elevator_servo']   = self.ui.max_elevator_servo.text()
+        self.currentParameters['gs_tools']['elevator_settings']['min_elevator_servo']   = self.ui.min_elevator_servo.text()
+        self.currentParameters['gs_tools']['elevator_settings']['elevator_reverse']     = self.ui.elevator_reverse.currentText()
+        self.currentParameters['gs_tools']['aileron_settings']['aileron_an_pin']        = self.ui.aileron_an_pin.currentText()
+        self.currentParameters['gs_tools']['aileron_settings']['max_aileron_adc']       = self.ui.max_aileron_adc.text()
+        self.currentParameters['gs_tools']['aileron_settings']['min_aileron_adc']       = self.ui.min_aileron_adc.text()
+        self.currentParameters['gs_tools']['aileron_settings']['max_aileron_servo']     = self.ui.max_aileron_servo.text()
+        self.currentParameters['gs_tools']['aileron_settings']['min_aileron_servo']     = self.ui.min_aileron_servo.text()
+        self.currentParameters['gs_tools']['aileron_settings']['aileron_reverse']       = self.ui.aileron_reverse.currentText()
+        self.currentParameters['gs_tools']['rudder_settings']['rudder_an_pin']          = self.ui.rudder_an_pin.currentText()
+        self.currentParameters['gs_tools']['rudder_settings']['max_rudder_adc']         = self.ui.max_rudder_adc.text()
+        self.currentParameters['gs_tools']['rudder_settings']['min_rudder_adc']         = self.ui.min_rudder_adc.text()
+        self.currentParameters['gs_tools']['rudder_settings']['max_rudder_servo']       = self.ui.max_rudder_servo.text()
+        self.currentParameters['gs_tools']['rudder_settings']['min_rudder_servo']       = self.ui.min_rudder_servo.text()
+        self.currentParameters['gs_tools']['rudder_settings']['rudder_reverse']         = self.ui.rudder_reverse.currentText()
 
         #IFC Settings
-        self.currentParameters['IFCTools']['SerialSettings']['IFC_DebugPortNumber']     = portName_to_portNum[self.ui.IFCDebugPort.currentText()]
-        self.currentParameters['IFCTools']['SerialSettings']['IFC_CommandPortNumber']   = portName_to_portNum[self.ui.IFCCommandPort.currentText()]
-        self.currentParameters['IFCTools']['SerialSettings']['IFC_GPSPortNumber']       = portName_to_portNum[self.ui.IFCGPSPort.currentText()]
-        self.currentParameters['IFCTools']['SerialSettings']['IFC_LiDARPortNumber']     = portName_to_portNum[self.ui.IFCLiDARPort.currentText()]
-        self.currentParameters['IFCTools']['SerialSettings']['IFC_TelemetryPortNumber'] = portName_to_portNum[self.ui.IFCTelemetryPort.currentText()]
-        self.currentParameters['IFCTools']['ControlSurfaceSettings']['ThrottlePin']     = sNum_to_dNum[self.ui.ThrottlePin.currentText()]
-        self.currentParameters['IFCTools']['ControlSurfaceSettings']['ElevatorPin']     = sNum_to_dNum[self.ui.ElevatorPin.currentText()]
-        self.currentParameters['IFCTools']['ControlSurfaceSettings']['AileronPin']      = sNum_to_dNum[self.ui.AileronPin.currentText()]
-        self.currentParameters['IFCTools']['ControlSurfaceSettings']['RudderPin']       = sNum_to_dNum[self.ui.RudderPin.currentText()]
-        self.currentParameters['IFCTools']['AutopilotSettings']['UnsafeRollRightAngle'] = self.ui.UnsafeRollRightAngle.text()
-        self.currentParameters['IFCTools']['AutopilotSettings']['UnsafeRollLeftAngle']  = self.ui.UnsafeRollLeftAngle.text()
-        self.currentParameters['IFCTools']['AutopilotSettings']['MaxRollRightAngle']    = self.ui.MaxRollRightAngle.text()
-        self.currentParameters['IFCTools']['AutopilotSettings']['MaxRollLeftAngle']     = self.ui.MaxRollLeftAngle.text()
-        self.currentParameters['IFCTools']['AutopilotSettings']['UnsafePitchUpAngle']   = self.ui.UnsafePitchUpAngle.text()
-        self.currentParameters['IFCTools']['AutopilotSettings']['UnsafePitchDownAngle'] = self.ui.UnsafePitchDownAngle.text()
-        self.currentParameters['IFCTools']['AutopilotSettings']['MaxPitchUpAngle']      = self.ui.MaxPitchUpAngle.text()
-        self.currentParameters['IFCTools']['AutopilotSettings']['MaxPitchDownAngle']    = self.ui.MaxPitchDownAngle.text()
-        self.currentParameters['IFCTools']['OtherSettings']['PitotTubeAnalogPin']       = sNum_to_aNum[self.ui.PitotTubeAnalogPin.currentText()]
-        self.currentParameters['IFCTools']['OtherSettings']['LiDARFixedMount']          = boolStr_to_digStr[self.ui.LiDARFixedMount.currentText()]
+        self.currentParameters['ifc_tools']['serial_settings']['ifc_command_port']      = self.ui.ifc_command_port.currentText()
+        self.currentParameters['ifc_tools']['serial_settings']['ifc_debug_enable']      = str(self.ui.enable_ifc_debugging.isChecked())
+        self.currentParameters['ifc_tools']['serial_settings']['ifc_debug_port']        = self.ui.ifc_debug_port.currentText()
+        self.currentParameters['ifc_tools']['serial_settings']['ifc_telem_enable']      = str(self.ui.enable_ifc_telem.isChecked())
+        self.currentParameters['ifc_tools']['serial_settings']['ifc_telem_port']        = self.ui.ifc_telem_port.currentText()
+        self.currentParameters['ifc_tools']['control_surface_settings']['throttle_servo_pin'] = self.ui.throttle_servo_pin.currentText()
+        self.currentParameters['ifc_tools']['control_surface_settings']['elevator_servo_pin'] = self.ui.elevator_servo_pin.currentText()
+        self.currentParameters['ifc_tools']['control_surface_settings']['aileron_servo_pin']  = self.ui.aileron_servo_pin.currentText()
+        self.currentParameters['ifc_tools']['control_surface_settings']['rudder_servo_pin']   = self.ui.rudder_servo_pin.currentText()
+        self.currentParameters['ifc_tools']['sensor_settings']['gps']['enable_gps']      = str(self.ui.enable_gps.isChecked())
+        self.currentParameters['ifc_tools']['sensor_settings']['gps']['gps_port']        = self.ui.gps_port.currentText()
+        self.currentParameters['ifc_tools']['sensor_settings']['gps']['gps_report_rate'] = self.ui.gps_report_rate.text()
+        self.currentParameters['ifc_tools']['sensor_settings']['gps']['gps_timeout']     = self.ui.gps_timeout.text()
+        self.currentParameters['ifc_tools']['sensor_settings']['gps']['enable_gpgga']    = str(self.ui.enable_gpgga.isChecked())
+        self.currentParameters['ifc_tools']['sensor_settings']['gps']['enable_gpgll']    = str(self.ui.enable_gpgll.isChecked())
+        self.currentParameters['ifc_tools']['sensor_settings']['gps']['enable_gpglv']    = str(self.ui.enable_gpglv.isChecked())
+        self.currentParameters['ifc_tools']['sensor_settings']['gps']['enable_gpgsa']    = str(self.ui.enable_gpgsa.isChecked())
+        self.currentParameters['ifc_tools']['sensor_settings']['gps']['enable_gprmc']    = str(self.ui.enable_gprmc.isChecked())
+        self.currentParameters['ifc_tools']['sensor_settings']['gps']['enable_gpvtg']    = str(self.ui.enable_gpvtg.isChecked())
+        self.currentParameters['ifc_tools']['sensor_settings']['lidar']['enable_lidar']  = str(self.ui.enable_lidar.isChecked())
+        self.currentParameters['ifc_tools']['sensor_settings']['lidar']['lidar_port']    = self.ui.lidar_port.currentText()
+        self.currentParameters['ifc_tools']['sensor_settings']['lidar']['lidar_fixed_mount'] = self.ui.lidar_fixed_mount.currentText()
+        self.currentParameters['ifc_tools']['sensor_settings']['imu']['enable_imu']      = str(self.ui.enable_imu.isChecked())
+        self.currentParameters['ifc_tools']['sensor_settings']['imu']['imu_port']        = self.ui.imu_port.currentText()
+        self.currentParameters['ifc_tools']['sensor_settings']['imu']['imu_address']     = self.ui.imu_address.text()
+        self.currentParameters['ifc_tools']['sensor_settings']['pitot']['enable_pitot']  = str(self.ui.enable_pitot.isChecked())
+        self.currentParameters['ifc_tools']['sensor_settings']['pitot']['pitot_pin']     = self.ui.pitot_pin.currentText()
+        self.currentParameters['ifc_tools']['autopilot_settings']['unsafe_roll_right']   = self.ui.unsafe_roll_right.text()
+        self.currentParameters['ifc_tools']['autopilot_settings']['unsafe_roll_left']    = self.ui.unsafe_roll_left.text()
+        self.currentParameters['ifc_tools']['autopilot_settings']['max_roll_right']      = self.ui.max_roll_right.text()
+        self.currentParameters['ifc_tools']['autopilot_settings']['max_roll_left']       = self.ui.max_roll_left.text()
+        self.currentParameters['ifc_tools']['autopilot_settings']['unsafe_pitch_up']     = self.ui.unsafe_pitch_up.text()
+        self.currentParameters['ifc_tools']['autopilot_settings']['unsafe_pitch_down']   = self.ui.unsafe_pitch_down.text()
+        self.currentParameters['ifc_tools']['autopilot_settings']['max_pitch_up']        = self.ui.max_pitch_up.text()
+        self.currentParameters['ifc_tools']['autopilot_settings']['max_pitch_down']      = self.ui.max_pitch_down.text()
 
     def get_custom_config_name(self):
-        text, okPressed = QInputDialog.getText(self, "Config Name", "Enter config name (leave blank to cancel):", QLineEdit.Normal, "")
+        text, okPressed = QInputDialog.getText(self, 'Config Name', 'Enter config name (leave blank to cancel):', QLineEdit.Normal, '')
         
         if okPressed and text != '':
             return text
         return False
 
     def write_out_config(self):
-        openfile = QFileDialog.getOpenFileName(self, directory="configs", filter="*.json")[0]
+        openfile = QFileDialog.getSaveFileName(self, directory='configs', filter='*.json')[0]
         
         if openfile:
             contents = pprint.pformat(self.currentParameters).replace("'", '"')
             
-            with open(openfile, "w") as config:
+            with open(openfile, 'w') as config:
                 config.write(contents)
     
-            print("--------------------------------")
-            print("Config exported to {}".format(openfile))
+            print('--------------------------------')
+            print('Config exported to {}'.format(openfile))
 
     def get_parameters(self):
         try:
             self.read_shared_tools()
-            self.read_gs_tools()
-            self.read_gs_serial()
-            self.read_ifc_tools()
-            self.read_ifc_serial()
-
+            self.update_param_dict()
         except:
             import traceback
             traceback.print_exc()
 
     def read_shared_tools(self):
-        with open(self.sharedToolsFilename, 'r') as inFile:
+        with open(self.shared_tools_filename, 'r') as inFile:
             contents = inFile.readlines()
 
         for line in contents:
@@ -413,435 +470,455 @@ class AppWindow(QDialog):
                 setting_name = line.split()[1]
                 setting_val  = line.split()[2]
                 
-                if define == "#define":
-                    if setting_name == "DEBUG_PORT_BAUD":
-                        self.ui.Debug_Port_Baud.setCurrentIndex(baudNum_to_baudIndex[setting_val])
+                if define == '#define':
+                    if setting_name == 'USE_GS_DEBUG':
+                        self.ui.enable_gs_debugging.setChecked(bool(int(setting_val)))
     
-                    elif setting_name == "COMMAND_PORT_BAUD":
-                        self.ui.Command_Port_Baud.setCurrentIndex(baudNum_to_baudIndex[setting_val])
-    
-                    elif setting_name == "GPS_PORT_BAUD":
-                        self.ui.GPS_Port_Baud.setCurrentIndex(baudNum_to_baudIndex[setting_val])
+                    elif setting_name == 'USE_IFC_DEBUG':
+                        self.ui.enable_ifc_debugging.setChecked(bool(int(setting_val)))
                     
-                    elif setting_name == "LIDAR_PORT_BAUD":
-                        self.ui.LiDAR_Port_Baud.setCurrentIndex(baudNum_to_baudIndex[setting_val])
-    
-                    elif setting_name == "TELEM_PORT_BAUD":
-                        self.ui.Telemetry_Port_Baud.setCurrentIndex(baudNum_to_baudIndex[setting_val])
-    
-                    elif setting_name == "REPORT_COMMANDS_FREQ":
-                        self.ui.CommandReportingRate.setValue(float(setting_val))
-    
-                    elif setting_name == "REPORT_TELEM_FREQ":
-                        self.ui.TelemetryReportingRate.setValue(float(setting_val))
-    
-                    elif setting_name == "LOSS_LINK_TIMEOUT":
-                        self.ui.LossLinkTimeout.setValue(int(setting_val))
-    
-                    elif setting_name == "THROTTLE_MAX":
-                        self.ui.MaxThrottleValue.setValue(int(setting_val))
-    
-                    elif setting_name == "AILERON_MAX":
-                        self.ui.MaxAileronValue.setValue(int(setting_val))
-    
-                    elif setting_name == "ELEVATOR_MAX":
-                        self.ui.MaxElevatorValue.setValue(int(setting_val))
-    
-                    elif setting_name == "RUDDER_MAX":
-                        self.ui.MaxRudderValue.setValue(int(setting_val))
-    
-                    elif setting_name == "THROTTLE_MIN":
-                        self.ui.MinThrottleValue.setValue(int(setting_val))
-    
-                    elif setting_name == "AILERON_MIN":
-                        self.ui.MinAileronValue.setValue(int(setting_val))
-    
-                    elif setting_name == "ELEVATOR_MIN":
-                        self.ui.MinElevatorValue.setValue(int(setting_val))
-    
-                    elif setting_name == "RUDDER_MIN":
-                        self.ui.MinRudderValue.setValue(int(setting_val))
-
-    def read_gs_tools(self):
-        with open(self.GSToolsFilename, 'r') as inFile:
-            contents = inFile.readlines()
-
-        for line in contents:
-            if len(line.split()) >= 3:
-                define       = line.split()[0]
-                setting_name = line.split()[1]
-                setting_val  = line.split()[2]
-                
-                if define == "#define":
-                    if setting_name == "YAW_ANALOG_PIN":
-                        self.ui.RudderAnalogPin.setCurrentIndex(aNum_to_index[setting_val])
-    
-                    elif setting_name == "THROTTLE_ANALOG_PIN":
-                        self.ui.ThrottleAnalogPin.setCurrentIndex(aNum_to_index[setting_val])
-    
-                    elif setting_name == "ROLL_ANALOG_PIN":
-                        self.ui.AileronAnalogPin.setCurrentIndex(aNum_to_index[setting_val])
-    
-                    elif setting_name == "PITCH_ANALOG_PIN":
-                        self.ui.ElevatorAnalogPin.setCurrentIndex(aNum_to_index[setting_val])
-    
-                    elif setting_name == "AILERON_MAX_LOWRATES":
-                        self.ui.MaxAileronServoValue.setValue(int(setting_val))
-    
-                    elif setting_name == "ELEVATOR_MAX_LOWRATES":
-                        self.ui.MaxElevatorServoValue.setValue(int(setting_val))
-    
-                    elif setting_name == "RUDDER_MAX_LOWRATES":
-                        self.ui.MaxRudderServoValue.setValue(int(setting_val))
-    
-                    elif setting_name == "AILERON_MIN_LOWRATES":
-                        self.ui.MinAileronServoValue.setValue(int(setting_val))
-    
-                    elif setting_name == "ELEVATOR_MIN_LOWRATES":
-                        self.ui.MinElevatorServoValue.setValue(int(setting_val))
-    
-                    elif setting_name == "RUDDER_MIN_LOWRATES":
-                        self.ui.MinRudderServoValue.setValue(int(setting_val))
-    
-                    elif setting_name == "THROTTLE_MIN_ADC":
-                        self.ui.MinThrottleADCValue.setValue(int(setting_val))
-    
-                    elif setting_name == "AILERON_MIN_ADC":
-                        self.ui.MinAileronADCValue.setValue(int(setting_val))
-    
-                    elif setting_name == "ELEVATOR_MIN_ADC":
-                        self.ui.MinElevatorADCValue.setValue(int(setting_val))
-    
-                    elif setting_name == "RUDDER_MIN_ADC":
-                        self.ui.MinRudderADCValue.setValue(int(setting_val))
-    
-                    elif setting_name == "THROTTLE_MAX_ADC":
-                        self.ui.MaxThrottleADCValue.setValue(int(setting_val))
-    
-                    elif setting_name == "AILERON_MAX_ADC":
-                        self.ui.MaxAileronADCValue.setValue(int(setting_val))
-    
-                    elif setting_name == "ELEVATOR_MAX_ADC":
-                        self.ui.MaxElevatorADCValue.setValue(int(setting_val))
-    
-                    elif setting_name == "RUDDER_MAX_ADC":
-                        self.ui.MaxRudderADCValue.setValue(int(setting_val))
-    
-                    elif setting_name == "AILERON_REVERSE":
-                        self.ui.AileronReverse.setCurrentIndex(boolRep_to_index[setting_val])
-    
-                    elif setting_name == "ELEVATOR_REVERSE":
-                        self.ui.ElevatorReverse.setCurrentIndex(boolRep_to_index[setting_val])
-    
-                    elif setting_name == "RUDDER_REVERSE":
-                        self.ui.RudderReverse.setCurrentIndex(boolRep_to_index[setting_val])
-    
-                    elif setting_name == "THROTTLE_REVERSE":
-                        self.ui.ThrottleReverse.setCurrentIndex(boolRep_to_index[setting_val])
-
-    def read_gs_serial(self):
-        with open(self.GSSerialFilename, 'r') as inFile:
-            contents = inFile.readlines()
-
-        for line in contents:
-            if len(line.split()) >= 3:
-                define       = line.split()[0]
-                setting_name = line.split()[1]
-                setting_val  = line.split()[2]
-                
-                if define == "#define":
-                    if setting_name == "GS_DEBUG_PORT_NUMBER":
-                        self.ui.GSDebugPort.setCurrentIndex(int(setting_val))
-    
-                    elif setting_name == "GS_COMMAND_PORT_NUMBER":
-                        self.ui.GSCommandPort.setCurrentIndex(int(setting_val))
-    
-                    elif setting_name == "GS_TELEM_PORT_NUMBER":
-                        self.ui.GSTelemetryPort.setCurrentIndex(int(setting_val))
-
-    def read_ifc_tools(self):
-        with open(self.IFCToolsFilename, 'r') as inFile:
-            contents = inFile.readlines()
-
-        for line in contents:
-            if len(line.split()) >= 3:
-                define       = line.split()[0]
-                setting_name = line.split()[1]
-                setting_val  = line.split()[2]
-                
-                if define == "#define":
-                    if setting_name == "LIDAR_FIXED_MOUNT":
-                        self.ui.LiDARFixedMount.setCurrentIndex(boolRep_to_index[setting_val])
-    
-                    elif setting_name == "PITOT_PIN":
-                        self.ui.PitotTubeAnalogPin.setCurrentIndex(aNum_to_index[setting_val])
-    
-                    elif setting_name == "THROTTLE_PIN":
-                        self.ui.ThrottlePin.setCurrentIndex(dNum_to_index[setting_val])
-    
-                    elif setting_name == "AILERON_PIN":
-                        self.ui.AileronPin.setCurrentIndex(dNum_to_index[setting_val])
-    
-                    elif setting_name == "ELEVATOR_PIN":
-                        self.ui.ElevatorPin.setCurrentIndex(dNum_to_index[setting_val])
-    
-                    elif setting_name == "RUDDER_PIN":
-                        self.ui.RudderPin.setCurrentIndex(dNum_to_index[setting_val])
-    
-                    elif setting_name == "UNSAFE_ROLL_R":
-                        self.ui.UnsafeRollRightAngle.setValue(int(setting_val))
-    
-                    elif setting_name == "UNSAFE_ROLL_L":
-                        self.ui.UnsafeRollLeftAngle.setValue(int(setting_val))
-    
-                    elif setting_name == "MAX_ROLL_R":
-                        self.ui.MaxRollRightAngle.setValue(int(setting_val))
-    
-                    elif setting_name == "MAX_ROLL_L":
-                        self.ui.MaxRollLeftAngle.setValue(int(setting_val))
-    
-                    elif setting_name == "UNSAFE_PITCH_UP":
-                        self.ui.UnsafePitchUpAngle.setValue(int(setting_val))
-    
-                    elif setting_name == "UNSAFE_PITCH_DOWN":
-                        self.ui.UnsafePitchDownAngle.setValue(int(setting_val))
-    
-                    elif setting_name == "MAX_PITCH_UP":
-                        self.ui.MaxPitchUpAngle.setValue(int(setting_val))
-    
-                    elif setting_name == "MAX_PITCH_DOWN":
-                        self.ui.MaxPitchDownAngle.setValue(int(setting_val))
-
-    def read_ifc_serial(self):
-        with open(self.IFCSerialFilename, 'r') as inFile:
-            contents = inFile.readlines()
-
-        for line in contents:
-            if len(line.split()) >= 3:
-                define       = line.split()[0]
-                setting_name = line.split()[1]
-                setting_val  = line.split()[2]
-                
-                if define == "#define":
-                    if setting_name == "IFC_DEBUG_PORT_NUMBER":
-                        self.ui.IFCDebugPort.setCurrentIndex(int(setting_val))
-    
-                    elif setting_name == "IFC_COMMAND_PORT_NUMBER":
-                        self.ui.IFCCommandPort.setCurrentIndex(int(setting_val))
-    
-                    elif setting_name == "IFC_GPS_PORT_NUMBER":
-                        self.ui.IFCGPSPort.setCurrentIndex(int(setting_val))
+                    elif setting_name == 'USE_GS_TELEM':
+                        self.ui.enable_gs_telem.setChecked(bool(int(setting_val)))
+                        
+                    elif setting_name == 'USE_IFC_TELEM':
+                        self.ui.enable_ifc_telem.setChecked(bool(int(setting_val)))
+                        
+                    elif setting_name == 'USE_IMU':
+                        self.ui.enable_imu.setChecked(bool(int(setting_val)))
+                        
+                    elif setting_name == 'USE_GPS':
+                        self.ui.enable_gps.setChecked(bool(int(setting_val)))
+                        
+                    elif setting_name == 'USE_PITOT':
+                        self.ui.enable_pitot.setChecked(bool(int(setting_val)))
+                        
+                    elif setting_name == 'USE_LIDAR':
+                        self.ui.enable_lidar.setChecked(bool(int(setting_val)))
+                        
+                    elif setting_name == 'IMU_PORT':
+                        self.ui.imu_port.setCurrentIndex(i2c_portName_to_portIndex[setting_val])
+                        
+                    elif setting_name == 'IMU_ID':
+                        self.ui.imu_address.setValue(int(setting_val))
                     
-                    elif setting_name == "IFC_LIDAR_PORT_NUMBER":
-                        self.ui.IFCLiDARPort.setCurrentIndex(int(setting_val))
-    
-                    elif setting_name == "IFC_TELEM_PORT_NUMBER":
-                        self.ui.IFCTelemetryPort.setCurrentIndex(int(setting_val))
+                    elif setting_name == 'DEBUG_PORT_BAUD':
+                        self.ui.debug_baud.setCurrentIndex(baudNum_to_baudIndex[setting_val])
+                        
+                    elif setting_name == 'COMMAND_PORT_BAUD':
+                        self.ui.command_baud.setCurrentIndex(baudNum_to_baudIndex[setting_val])
+                        
+                    elif setting_name == 'GPS_PORT_BAUD':
+                        self.ui.gps_baud.setCurrentIndex(baudNum_to_baudIndex[setting_val])
+                        
+                    elif setting_name == 'LIDAR_PORT_BAUD':
+                        self.ui.lidar_baud.setCurrentIndex(baudNum_to_baudIndex[setting_val])
+                        
+                    elif setting_name == 'TELEM_PORT_BAUD':
+                        self.ui.telem_baud.setCurrentIndex(baudNum_to_baudIndex[setting_val])
+                        
+                    elif setting_name == 'IFC_DEBUG_PORT_NUMBER':
+                        self.ui.ifc_debug_port.setCurrentIndex(int(setting_val))
+                        
+                    elif setting_name == 'IFC_COMMAND_PORT_NUMBER':
+                        self.ui.ifc_command_port.setCurrentIndex(int(setting_val))
+                        
+                    elif setting_name == 'IFC_GPS_PORT_NUMBER':
+                        self.ui.gps_port.setCurrentIndex(int(setting_val))
+                        
+                    elif setting_name == 'IFC_LIDAR_PORT_NUMBER':
+                        self.ui.lidar_port.setCurrentIndex(int(setting_val))
+                        
+                    elif setting_name == 'IFC_TELEM_PORT_NUMBER':
+                        self.ui.ifc_telem_port.setCurrentIndex(int(setting_val))
+                        
+                    elif setting_name == 'GS_DEBUG_PORT_NUMBER':
+                        self.ui.gs_debug_port.setCurrentIndex(int(setting_val))
+                        
+                    elif setting_name == 'GS_COMMAND_PORT_NUMBER':
+                        self.ui.gs_command_port.setCurrentIndex(int(setting_val))
+                        
+                    elif setting_name == 'GS_TELEM_PORT_NUMBER':
+                        self.ui.gs_telem_port.setCurrentIndex(int(setting_val))
+                        
+                    elif setting_name == 'REPORT_COMMANDS_FREQ':
+                        self.ui.command_report_rate.setValue(float(setting_val))
+                        
+                    elif setting_name == 'REPORT_TELEM_FREQ':
+                        self.ui.telem_report_rate.setValue(float(setting_val))
+                        
+                    elif setting_name == 'LOSS_LINK_TIMEOUT':
+                        self.ui.loss_link_timeout.setValue(int(setting_val))
+                        
+                    elif setting_name == 'LOSS_GPS_TIMEOUT':
+                        self.ui.gps_timeout.setValue(int(setting_val))
+                        
+                    elif setting_name == 'ROLL_ANALOG_PIN':
+                        self.ui.aileron_an_pin.setCurrentIndex(aNum_to_index[setting_val])
+                        
+                    elif setting_name == 'PITCH_ANALOG_PIN':
+                        self.ui.elevator_an_pin.setCurrentIndex(aNum_to_index[setting_val])
+                        
+                    elif setting_name == 'YAW_ANALOG_PIN':
+                        self.ui.rudder_an_pin.setCurrentIndex(aNum_to_index[setting_val])
+                        
+                    elif setting_name == 'THROTTLE_ANALOG_PIN':
+                        self.ui.throttle_an_pin.setCurrentIndex(aNum_to_index[setting_val])
+                        
+                    elif setting_name == 'AILERON_MAX_ADC':
+                        self.ui.max_aileron_adc.setValue(int(setting_val))
+                        
+                    elif setting_name == 'ELEVATOR_MAX_ADC':
+                        self.ui.max_elevator_adc.setValue(int(setting_val))
+                        
+                    elif setting_name == 'RUDDER_MAX_ADC':
+                        self.ui.max_rudder_adc.setValue(int(setting_val))
+                        
+                    elif setting_name == 'THROTTLE_MAX_ADC':
+                        self.ui.max_throttle_adc.setValue(int(setting_val))
+                        
+                    elif setting_name == 'AILERON_MIN_ADC':
+                        self.ui.min_aileron_adc.setValue(int(setting_val))
+                        
+                    elif setting_name == 'ELEVATOR_MIN_ADC':
+                        self.ui.min_elevator_adc.setValue(int(setting_val))
+                        
+                    elif setting_name == 'RUDDER_MIN_ADC':
+                        self.ui.min_rudder_adc.setValue(int(setting_val))
+                        
+                    elif setting_name == 'THROTTLE_MIN_ADC':
+                        self.ui.min_throttle_adc.setValue(int(setting_val))
+                        
+                    elif setting_name == 'AILERON_REVERSE':
+                        self.ui.aileron_reverse.setCurrentIndex(boolRep_to_index[setting_val])
+                    
+                    elif setting_name == 'ELEVATOR_REVERSE':
+                        self.ui.elevator_reverse.setCurrentIndex(boolRep_to_index[setting_val])
+                    
+                    elif setting_name == 'RUDDER_REVERSE':
+                        self.ui.rudder_reverse.setCurrentIndex(boolRep_to_index[setting_val])
+                    
+                    elif setting_name == 'THROTTLE_REVERSE':
+                        self.ui.throttle_reverse.setCurrentIndex(boolRep_to_index[setting_val])
+                    
+                    elif setting_name == 'AILERON_MAX':
+                        self.ui.max_aileron_servo.setValue(int(setting_val))
+                    
+                    elif setting_name == 'ELEVATOR_MAX':
+                        self.ui.max_elevator_servo.setValue(int(setting_val))
+                    
+                    elif setting_name == 'RUDDER_MAX':
+                        self.ui.max_rudder_servo.setValue(int(setting_val))
+                    
+                    elif setting_name == 'THROTTLE_MAX':
+                        self.ui.max_throttle_servo.setValue(int(setting_val))
+                    
+                    elif setting_name == 'AILERON_MIN':
+                        self.ui.min_aileron_servo.setValue(int(setting_val))
+                    
+                    elif setting_name == 'ELEVATOR_MIN':
+                        self.ui.min_elevator_servo.setValue(int(setting_val))
+                    
+                    elif setting_name == 'RUDDER_MIN':
+                        self.ui.min_rudder_servo.setValue(int(setting_val))
+                    
+                    elif setting_name == 'THROTTLE_MIN':
+                        self.ui.min_throttle_servo.setValue(int(setting_val))
+                    
+                    elif setting_name == 'AILERON_SERVO_PIN':
+                        self.ui.aileron_servo_pin.setCurrentIndex(dNum_to_index[setting_val])
+                    
+                    elif setting_name == 'ELEVATOR_SERVO_PIN':
+                        self.ui.elevator_servo_pin.setCurrentIndex(dNum_to_index[setting_val])
+                    
+                    elif setting_name == 'RUDDER_SERVO_PIN':
+                        self.ui.rudder_servo_pin.setCurrentIndex(dNum_to_index[setting_val])
+                    
+                    elif setting_name == 'THROTTLE_SERVO_PIN':
+                        self.ui.throttle_servo_pin.setCurrentIndex(dNum_to_index[setting_val])
+                    
+                    elif setting_name == 'LIDAR_FIXED_MOUNT':
+                        self.ui.lidar_fixed_mount.setCurrentIndex(boolRep_to_index[setting_val])
+                    
+                    elif setting_name == 'GPS_REFRESH':
+                        self.ui.gps_report_rate.setValue(int(setting_val))
+                    
+                    elif setting_name == 'GPGGA_ENABLED':
+                        self.ui.enable_gpgga.setChecked(bool(int(setting_val)))
+                    
+                    elif setting_name == 'GPGLL_ENABLED':
+                        self.ui.enable_gpgll.setChecked(bool(int(setting_val)))
+                    
+                    elif setting_name == 'GPGLV_ENABLED':
+                        self.ui.enable_gpglv.setChecked(bool(int(setting_val)))
+                    
+                    elif setting_name == 'GPGSA_ENABLED':
+                        self.ui.enable_gpgsa.setChecked(bool(int(setting_val)))
+                    
+                    elif setting_name == 'GPRMC_ENABLED':
+                        self.ui.enable_gprmc.setChecked(bool(int(setting_val)))
+                    
+                    elif setting_name == 'GPVTG_ENABLED':
+                        self.ui.enable_gpvtg.setChecked(bool(int(setting_val)))
+                    
+                    elif setting_name == 'PITOT_PIN':
+                        self.ui.pitot_pin.setCurrentIndex(aNum_to_index[setting_val])
+                    
+                    elif setting_name == 'UNSAFE_ROLL_R':
+                        self.ui.unsafe_roll_right.setValue(int(setting_val))
+                    
+                    elif setting_name == 'UNSAFE_ROLL_L':
+                        self.ui.unsafe_roll_left.setValue(int(setting_val))
+                    
+                    elif setting_name == 'MAX_ROLL_R':
+                        self.ui.max_roll_right.setValue(int(setting_val))
+                    
+                    elif setting_name == 'MAX_ROLL_L':
+                        self.ui.max_roll_left.setValue(int(setting_val))
+                    
+                    elif setting_name == 'UNSAFE_PITCH_UP':
+                        self.ui.unsafe_pitch_up.setValue(int(setting_val))
+                    
+                    elif setting_name == 'UNSAFE_PITCH_DOWN':
+                        self.ui.unsafe_pitch_down.setValue(int(setting_val))
+                    
+                    elif setting_name == 'MAX_PITCH_UP':
+                        self.ui.max_pitch_up.setValue(int(setting_val))
+                    
+                    elif setting_name == 'MAX_PITCH_DOWN':
+                        self.ui.max_pitch_down.setValue(int(setting_val))
 
     def update_gui(self):
         self.update_gui_shared_tools()
-        self.update_gui_gs_tools()
-        self.update_gui_ifc_tools()
 
     def update_gui_shared_tools(self):
-        self.value = self.currentParameters['SharedTools']['SerialSettings']['Debug_Port_Baud']
-        self.ui.Debug_Port_Baud.setCurrentIndex(baudNum_to_baudIndex[self.value])
-
-        self.value = self.currentParameters['SharedTools']['SerialSettings']['Command_Port_Baud']
-        self.ui.Command_Port_Baud.setCurrentIndex(baudNum_to_baudIndex[self.value])
-
-        self.value = self.currentParameters['SharedTools']['SerialSettings']['GPS_Port_Baud']
-        self.ui.GPS_Port_Baud.setCurrentIndex(baudNum_to_baudIndex[self.value])
+        self.value = self.currentParameters['shared_tools']['serial_settings']['debug_baud']
+        self.ui.debug_baud.setCurrentIndex(baudNum_to_baudIndex[self.value])
         
-        self.value = self.currentParameters['SharedTools']['SerialSettings']['LiDAR_Port_Baud']
-        self.ui.LiDAR_Port_Baud.setCurrentIndex(baudNum_to_baudIndex[self.value])
-
-        self.value = self.currentParameters['SharedTools']['SerialSettings']['Telemetry_Port_Baud']
-        self.ui.Telemetry_Port_Baud.setCurrentIndex(baudNum_to_baudIndex[self.value])
-
-        self.value = float(self.currentParameters['SharedTools']['Reporting_TimeoutSettings']['CommandReportingRate'])
-        self.ui.CommandReportingRate.setValue(self.value)
-
-        self.value = float(self.currentParameters['SharedTools']['Reporting_TimeoutSettings']['TelemetryReportingRate'])
-        self.ui.TelemetryReportingRate.setValue(self.value)
-
-        self.value = int(self.currentParameters['SharedTools']['Reporting_TimeoutSettings']['LossLinkTimeout'])
-        self.ui.LossLinkTimeout.setValue(self.value)
-
-        self.value = int(self.currentParameters['SharedTools']['ThrottleSettings']['MaxThrottleValue'])
-        self.ui.MaxThrottleValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['SharedTools']['ThrottleSettings']['MinThrottleValue'])
-        self.ui.MinThrottleValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['SharedTools']['ElevatorSettings']['MaxElevatorValue'])
-        self.ui.MaxElevatorValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['SharedTools']['ElevatorSettings']['MinElevatorValue'])
-        self.ui.MinElevatorValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['SharedTools']['AileronSettings']['MaxAileronValue'])
-        self.ui.MaxAileronValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['SharedTools']['AileronSettings']['MinAileronValue'])
-        self.ui.MinAileronValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['SharedTools']['RudderSettings']['MaxRudderValue'])
-        self.ui.MaxRudderValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['SharedTools']['RudderSettings']['MinRudderValue'])
-        self.ui.MinRudderValue.setValue(self.value)
-
-    def update_gui_gs_tools(self):
-        self.value = int(self.currentParameters['GSTools']['SerialSettings']['GS_DebugPortNumber'])
-        self.ui.GSDebugPort.setCurrentIndex(self.value)
-
-        self.value = int(self.currentParameters['GSTools']['SerialSettings']['GS_CommandPortNumber'])
-        self.ui.GSCommandPort.setCurrentIndex(self.value)
-
-        self.value = int(self.currentParameters['GSTools']['SerialSettings']['GS_TelemetryPortNumber'])
-        self.ui.GSTelemetryPort.setCurrentIndex(self.value)
-
-        self.value = self.currentParameters['GSTools']['ThrottleSettings']['ThrottleAnalogPin']
-        self.ui.ThrottleAnalogPin.setCurrentIndex(aNum_to_index[self.value])
-
-        self.value = int(self.currentParameters['GSTools']['ThrottleSettings']['MinThrottleADCValue'])
-        self.ui.MinThrottleADCValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['GSTools']['ThrottleSettings']['MaxThrottleADCValue'])
-        self.ui.MaxThrottleADCValue.setValue(self.value)
-
-        self.value = self.currentParameters['GSTools']['ElevatorSettings']['ElevatorAnalogPin']
-        self.ui.ElevatorAnalogPin.setCurrentIndex(aNum_to_index[self.value])
-
-        self.value = int(self.currentParameters['GSTools']['ElevatorSettings']['MinElevatorADCValue'])
-        self.ui.MinElevatorADCValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['GSTools']['ElevatorSettings']['MaxElevatorADCValue'])
-        self.ui.MaxElevatorADCValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['GSTools']['ElevatorSettings']['MinElevatorServoValue'])
-        self.ui.MinElevatorServoValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['GSTools']['ElevatorSettings']['MaxElevatorServoValue'])
-        self.ui.MaxElevatorServoValue.setValue(self.value)
-
-        self.value = self.currentParameters['GSTools']['AileronSettings']['AileronAnalogPin']
-        self.ui.AileronAnalogPin.setCurrentIndex(aNum_to_index[self.value])
-
-        self.value = int(self.currentParameters['GSTools']['AileronSettings']['MinAileronADCValue'])
-        self.ui.MinAileronADCValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['GSTools']['AileronSettings']['MaxAileronADCValue'])
-        self.ui.MaxAileronADCValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['GSTools']['AileronSettings']['MinAileronServoValue'])
-        self.ui.MinAileronServoValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['GSTools']['AileronSettings']['MaxAileronServoValue'])
-        self.ui.MaxAileronServoValue.setValue(self.value)
-
-        self.value = self.currentParameters['GSTools']['RudderSettings']['RudderAnalogPin']
-        self.ui.RudderAnalogPin.setCurrentIndex(aNum_to_index[self.value])
-
-        self.value = int(self.currentParameters['GSTools']['RudderSettings']['MinRudderADCValue'])
-        self.ui.MinRudderADCValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['GSTools']['RudderSettings']['MaxRudderADCValue'])
-        self.ui.MaxRudderADCValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['GSTools']['RudderSettings']['MinRudderServoValue'])
-        self.ui.MinRudderServoValue.setValue(self.value)
-
-        self.value = int(self.currentParameters['GSTools']['RudderSettings']['MaxRudderServoValue'])
-        self.ui.MaxRudderServoValue.setValue(self.value)
-
-        self.value = self.currentParameters['GSTools']['ThrottleSettings']['ThrottleReverse']
-        self.ui.ThrottleReverse.setCurrentIndex(boolRep_to_index[self.value])
-
-        self.value = self.currentParameters['GSTools']['ElevatorSettings']['ElevatorReverse']
-        self.ui.ElevatorReverse.setCurrentIndex(boolRep_to_index[self.value])
-
-        self.value = self.currentParameters['GSTools']['AileronSettings']['AileronReverse']
-        self.ui.AileronReverse.setCurrentIndex(boolRep_to_index[self.value])
-
-        self.value = self.currentParameters['GSTools']['RudderSettings']['RudderReverse']
-        self.ui.RudderReverse.setCurrentIndex(boolRep_to_index[self.value])
-
-    def update_gui_ifc_tools(self):
-        self.value = int(self.currentParameters['IFCTools']['SerialSettings']['IFC_DebugPortNumber'])
-        self.ui.IFCDebugPort.setCurrentIndex(self.value)
-
-        self.value = int(self.currentParameters['IFCTools']['SerialSettings']['IFC_CommandPortNumber'])
-        self.ui.IFCCommandPort.setCurrentIndex(self.value)
-
-        self.value = int(self.currentParameters['IFCTools']['SerialSettings']['IFC_GPSPortNumber'])
-        self.ui.IFCGPSPort.setCurrentIndex(self.value)
+        self.value = self.currentParameters['shared_tools']['serial_settings']['command_baud']
+        self.ui.command_baud.setCurrentIndex(baudNum_to_baudIndex[self.value])
         
-        self.value = int(self.currentParameters['IFCTools']['SerialSettings']['IFC_LiDARPortNumber'])
-        self.ui.IFCLiDARPort.setCurrentIndex(self.value)
-
-        self.value = int(self.currentParameters['IFCTools']['SerialSettings']['IFC_TelemetryPortNumber'])
-        self.ui.IFCTelemetryPort.setCurrentIndex(self.value)
-
-        self.value = self.currentParameters['IFCTools']['ControlSurfaceSettings']['ThrottlePin']
-        self.ui.ThrottlePin.setCurrentIndex(dNum_to_index[self.value])
-
-        self.value = self.currentParameters['IFCTools']['ControlSurfaceSettings']['ElevatorPin']
-        self.ui.ElevatorPin.setCurrentIndex(dNum_to_index[self.value])
-
-        self.value = self.currentParameters['IFCTools']['ControlSurfaceSettings']['AileronPin']
-        self.ui.AileronPin.setCurrentIndex(dNum_to_index[self.value])
-
-        self.value = self.currentParameters['IFCTools']['ControlSurfaceSettings']['RudderPin']
-        self.ui.RudderPin.setCurrentIndex(dNum_to_index[self.value])
-
-        self.value = int(self.currentParameters['IFCTools']['AutopilotSettings']['UnsafeRollRightAngle'])
-        self.ui.UnsafeRollRightAngle.setValue(self.value)
-
-        self.value = int(self.currentParameters['IFCTools']['AutopilotSettings']['UnsafeRollLeftAngle'])
-        self.ui.UnsafeRollLeftAngle.setValue(self.value)
-
-        self.value = int(self.currentParameters['IFCTools']['AutopilotSettings']['MaxRollRightAngle'])
-        self.ui.MaxRollRightAngle.setValue(self.value)
-
-        self.value = int(self.currentParameters['IFCTools']['AutopilotSettings']['MaxRollLeftAngle'])
-        self.ui.MaxRollLeftAngle.setValue(self.value)
-
-        self.value = int(self.currentParameters['IFCTools']['AutopilotSettings']['UnsafePitchUpAngle'])
-        self.ui.UnsafePitchUpAngle.setValue(self.value)
-
-        self.value = int(self.currentParameters['IFCTools']['AutopilotSettings']['UnsafePitchDownAngle'])
-        self.ui.UnsafePitchDownAngle.setValue(self.value)
-
-        self.value = int(self.currentParameters['IFCTools']['AutopilotSettings']['MaxPitchUpAngle'])
-        self.ui.MaxPitchUpAngle.setValue(self.value)
-
-        self.value = int(self.currentParameters['IFCTools']['AutopilotSettings']['MaxPitchDownAngle'])
-        self.ui.MaxPitchDownAngle.setValue(self.value)
-
-        self.value = self.currentParameters['IFCTools']['OtherSettings']['PitotTubeAnalogPin']
-        self.ui.PitotTubeAnalogPin.setCurrentIndex(aNum_to_index[self.value])
-
-        self.value = self.currentParameters['IFCTools']['OtherSettings']['LiDARFixedMount']
-        self.ui.LiDARFixedMount.setCurrentIndex(boolRep_to_index[self.value])
+        self.value = self.currentParameters['shared_tools']['serial_settings']['gps_baud']
+        self.ui.gps_baud.setCurrentIndex(baudNum_to_baudIndex[self.value])
+        
+        self.value = self.currentParameters['shared_tools']['serial_settings']['lidar_baud']
+        self.ui.lidar_baud.setCurrentIndex(baudNum_to_baudIndex[self.value])
+        
+        self.value = self.currentParameters['shared_tools']['serial_settings']['telem_baud']
+        self.ui.lidar_baud.setCurrentIndex(baudNum_to_baudIndex[self.value])
+        
+        self.value = self.currentParameters['shared_tools']['reporting_timeout_settings']['command_report_rate']
+        self.ui.command_report_rate.setValue(float(self.value))
+        
+        self.value = self.currentParameters['shared_tools']['reporting_timeout_settings']['telem_report_rate']
+        self.ui.telem_report_rate.setValue(float(self.value))
+        
+        self.value = self.currentParameters['shared_tools']['reporting_timeout_settings']['loss_link_timeout']
+        self.ui.loss_link_timeout.setValue(float(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['serial_settings']['gs_command_port']
+        self.ui.gs_command_port.setCurrentIndex(int(portName_to_portNum[self.value]))
+        
+        self.value = self.currentParameters['gs_tools']['serial_settings']['gs_debug_enable']
+        self.ui.enable_gs_debugging.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['gs_tools']['serial_settings']['gs_debug_port']
+        self.ui.gs_debug_port.setCurrentIndex(int(portName_to_portNum[self.value]))
+        
+        self.value = self.currentParameters['gs_tools']['serial_settings']['gs_telem_enable']
+        self.ui.enable_gs_telem.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['gs_tools']['serial_settings']['gs_telem_port']
+        self.ui.gs_telem_port.setCurrentIndex(int(portName_to_portNum[self.value]))
+        
+        self.value = self.currentParameters['gs_tools']['throttle_settings']['throttle_an_pin']
+        self.ui.throttle_an_pin.setCurrentIndex(aNum_to_index[sNum_to_aNum[self.value]])
+        
+        self.value = self.currentParameters['gs_tools']['throttle_settings']['max_throttle_adc']
+        self.ui.max_throttle_adc.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['throttle_settings']['min_throttle_adc']
+        self.ui.min_throttle_adc.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['throttle_settings']['max_throttle_servo']
+        self.ui.max_throttle_servo.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['throttle_settings']['min_throttle_servo']
+        self.ui.min_throttle_servo.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['throttle_settings']['throttle_reverse']
+        self.ui.throttle_reverse.setCurrentIndex(boolRep_to_index[self.value.lower()])
+        
+        self.value = self.currentParameters['gs_tools']['elevator_settings']['elevator_an_pin']
+        self.ui.elevator_an_pin.setCurrentIndex(aNum_to_index[sNum_to_aNum[self.value]])
+        
+        self.value = self.currentParameters['gs_tools']['elevator_settings']['max_elevator_adc']
+        self.ui.max_elevator_adc.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['elevator_settings']['min_elevator_adc']
+        self.ui.min_elevator_adc.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['elevator_settings']['max_elevator_servo']
+        self.ui.max_elevator_servo.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['elevator_settings']['min_elevator_servo']
+        self.ui.min_elevator_servo.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['elevator_settings']['elevator_reverse']
+        self.ui.elevator_reverse.setCurrentIndex(boolRep_to_index[self.value.lower()])
+        
+        self.value = self.currentParameters['gs_tools']['aileron_settings']['aileron_an_pin']
+        self.ui.aileron_an_pin.setCurrentIndex(aNum_to_index[sNum_to_aNum[self.value]])
+        
+        self.value = self.currentParameters['gs_tools']['aileron_settings']['max_aileron_adc']
+        self.ui.max_aileron_adc.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['aileron_settings']['min_aileron_adc']
+        self.ui.min_aileron_adc.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['aileron_settings']['max_aileron_servo']
+        self.ui.max_aileron_servo.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['aileron_settings']['min_aileron_servo']
+        self.ui.min_aileron_servo.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['aileron_settings']['aileron_reverse']
+        self.ui.aileron_reverse.setCurrentIndex(boolRep_to_index[self.value.lower()])
+        
+        self.value = self.currentParameters['gs_tools']['rudder_settings']['rudder_an_pin']
+        self.ui.rudder_an_pin.setCurrentIndex(aNum_to_index[sNum_to_aNum[self.value]])
+        
+        self.value = self.currentParameters['gs_tools']['rudder_settings']['max_rudder_adc']
+        self.ui.max_rudder_adc.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['rudder_settings']['min_rudder_adc']
+        self.ui.min_rudder_adc.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['rudder_settings']['max_rudder_servo']
+        self.ui.max_rudder_servo.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['rudder_settings']['min_rudder_servo']
+        self.ui.min_rudder_servo.setValue(int(self.value))
+        
+        self.value = self.currentParameters['gs_tools']['rudder_settings']['rudder_reverse']
+        self.ui.rudder_reverse.setCurrentIndex(boolRep_to_index[self.value.lower()])
+        
+        self.value = self.currentParameters['ifc_tools']['serial_settings']['ifc_command_port']
+        self.ui.ifc_command_port.setCurrentIndex(int(portName_to_portNum[self.value]))
+        
+        self.value = self.currentParameters['ifc_tools']['serial_settings']['ifc_debug_enable']
+        self.ui.enable_ifc_debugging.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['ifc_tools']['serial_settings']['ifc_debug_port']
+        self.ui.ifc_debug_port.setCurrentIndex(int(portName_to_portNum[self.value]))
+        
+        self.value = self.currentParameters['ifc_tools']['serial_settings']['ifc_telem_enable']
+        self.ui.enable_ifc_telem.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['ifc_tools']['serial_settings']['ifc_telem_port']
+        self.ui.ifc_telem_port.setCurrentIndex(int(portName_to_portNum[self.value]))
+        
+        self.value = self.currentParameters['ifc_tools']['control_surface_settings']['throttle_servo_pin']
+        self.ui.throttle_servo_pin.setCurrentIndex(sNum_to_index[self.value])
+        
+        self.value = self.currentParameters['ifc_tools']['control_surface_settings']['elevator_servo_pin']
+        self.ui.elevator_servo_pin.setCurrentIndex(sNum_to_index[self.value])
+        
+        self.value = self.currentParameters['ifc_tools']['control_surface_settings']['aileron_servo_pin']
+        self.ui.aileron_servo_pin.setCurrentIndex(sNum_to_index[self.value])
+        
+        self.value = self.currentParameters['ifc_tools']['control_surface_settings']['rudder_servo_pin']
+        self.ui.rudder_servo_pin.setCurrentIndex(sNum_to_index[self.value])
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['gps']['enable_gps']
+        self.ui.enable_gps.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['gps']['gps_port']
+        self.ui.gps_port.setCurrentIndex(int(portName_to_portNum[self.value]))
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['gps']['gps_report_rate']
+        self.ui.gps_report_rate.setValue(int(self.value))
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['gps']['gps_timeout']
+        self.ui.gps_timeout.setValue(int(self.value))
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['gps']['enable_gpgga']
+        self.ui.enable_gpgga.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['gps']['enable_gpgll']
+        self.ui.enable_gpgll.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['gps']['enable_gpglv']
+        self.ui.enable_gpglv.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['gps']['enable_gpgsa']
+        self.ui.enable_gpgsa.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['gps']['enable_gprmc']
+        self.ui.enable_gprmc.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['gps']['enable_gpvtg']
+        self.ui.enable_gpvtg.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['lidar']['enable_lidar']
+        self.ui.enable_lidar.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['lidar']['lidar_port']
+        self.ui.lidar_port.setCurrentIndex(int(portName_to_portNum[self.value]))
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['lidar']['lidar_fixed_mount']
+        self.ui.lidar_fixed_mount.setCurrentIndex(boolRep_to_index[self.value.lower()])
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['imu']['enable_imu']
+        self.ui.enable_imu.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['imu']['imu_port']
+        self.ui.imu_port.setCurrentIndex(i2c_portName_to_portIndex[self.value])
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['imu']['imu_address']
+        self.ui.imu_address.setValue(int(self.value))
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['pitot']['enable_pitot']
+        self.ui.enable_pitot.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['pitot']['pitot_pin']
+        self.ui.pitot_pin.setCurrentIndex(aNum_to_index[sNum_to_aNum[self.value]])
+        
+        self.value = self.currentParameters['ifc_tools']['autopilot_settings']['unsafe_roll_right']
+        self.ui.unsafe_roll_right.setValue(int(self.value))
+        
+        self.value = self.currentParameters['ifc_tools']['autopilot_settings']['unsafe_roll_left']
+        self.ui.unsafe_roll_left.setValue(int(self.value))
+        
+        self.value = self.currentParameters['ifc_tools']['autopilot_settings']['max_roll_right']
+        self.ui.max_roll_right.setValue(int(self.value))
+        
+        self.value = self.currentParameters['ifc_tools']['autopilot_settings']['max_roll_left']
+        self.ui.max_roll_left.setValue(int(self.value))
+        
+        self.value = self.currentParameters['ifc_tools']['autopilot_settings']['unsafe_pitch_up']
+        self.ui.unsafe_pitch_up.setValue(int(self.value))
+        
+        self.value = self.currentParameters['ifc_tools']['autopilot_settings']['unsafe_pitch_down']
+        self.ui.unsafe_pitch_down.setValue(int(self.value))
+        
+        self.value = self.currentParameters['ifc_tools']['autopilot_settings']['max_pitch_up']
+        self.ui.max_pitch_up.setValue(int(self.value))
+        
+        self.value = self.currentParameters['ifc_tools']['autopilot_settings']['max_pitch_down']
+        self.ui.max_pitch_down.setValue(int(self.value))
 
     def write_out_parameters(self):
         try:
             self.write_out_shared_tools()
-            self.write_out_gs_tools()
-            self.write_out_gs_serial()
-            self.write_out_ifc_tools()
-            self.write_out_ifc_serial()
 
-            print("--------------------------------")
-            print("Library Updated")
+            print('--------------------------------')
+            print('Library Updated')
         except:
             import traceback
             traceback.print_exc()
 
     def write_out_shared_tools(self):
-        with open(self.sharedToolsFilename, 'r') as inFile:
+        with open(self.shared_tools_filename, 'r') as inFile:
             contents = inFile.readlines()
 
         new_contents = []
@@ -852,382 +929,300 @@ class AppWindow(QDialog):
                 setting_name = line.split()[1]
                 setting_val  = line.split()[2]
                 
-                if define == "#define":
-                    if setting_name == "DEBUG_PORT_BAUD":
-                        new_value = self.ui.Debug_Port_Baud.currentText()
-                        line = line.replace(setting_val, new_value)
+                if define == '#define':
+                    if setting_name == 'USE_GS_DEBUG':
+                        new_val = boolStr_to_digStr[str(self.ui.enable_gs_debugging.isChecked())]
+                        line = line.replace(setting_val, new_val)
     
-                    elif setting_name == "COMMAND_PORT_BAUD":
-                        new_value = self.ui.Command_Port_Baud.currentText()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "GPS_PORT_BAUD":
-                        new_value = self.ui.GPS_Port_Baud.currentText()
-                        line = line.replace(setting_val, new_value)
+                    elif setting_name == 'USE_IFC_DEBUG':
+                        new_val = boolStr_to_digStr[str(self.ui.enable_ifc_debugging.isChecked())]
+                        line = line.replace(setting_val, new_val)
                     
-                    elif setting_name == "LIDAR_PORT_BAUD":
-                        new_value = self.ui.LiDAR_Port_Baud.currentText()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "TELEM_PORT_BAUD":
-                        new_value = self.ui.Telemetry_Port_Baud.currentText()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "REPORT_COMMANDS_FREQ":
-                        new_value = self.ui.CommandReportingRate.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "REPORT_TELEM_FREQ":
-                        new_value = self.ui.TelemetryReportingRate.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "LOSS_LINK_TIMEOUT":
-                        new_value = self.ui.LossLinkTimeout.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "THROTTLE_MAX":
-                        new_value = self.ui.MaxThrottleValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "AILERON_MAX":
-                        new_value = self.ui.MaxAileronValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "ELEVATOR_MAX":
-                        new_value = self.ui.MaxElevatorValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "RUDDER_MAX":
-                        new_value = self.ui.MaxRudderValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "THROTTLE_MIN":
-                        new_value = self.ui.MinThrottleValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "AILERON_MIN":
-                        new_value = self.ui.MinAileronValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "ELEVATOR_MIN":
-                        new_value = self.ui.MinElevatorValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "RUDDER_MIN":
-                        new_value = self.ui.MinRudderValue.text()
-                        line = line.replace(setting_val, new_value)
-
-            new_contents.append(line)
-
-        new_contents = "".join(new_contents)
-
-        with open(self.sharedToolsFilename, 'w') as outFile:
-            outFile.write(new_contents)
-
-    def write_out_gs_tools(self):
-        with open(self.GSToolsFilename, 'r') as inFile:
-            contents = inFile.readlines()
-
-        new_contents = []
-
-        for line in contents:
-            if len(line.split()) >= 3:
-                define       = line.split()[0]
-                setting_name = line.split()[1]
-                setting_val  = line.split()[2]
-                
-                if define == "#define":
-                    if setting_name == "YAW_ANALOG_PIN":
-                        new_value = sNum_to_aNum[self.ui.RudderAnalogPin.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "THROTTLE_ANALOG_PIN":
-                        new_value = sNum_to_aNum[self.ui.ThrottleAnalogPin.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "ROLL_ANALOG_PIN":
-                        new_value = sNum_to_aNum[self.ui.AileronAnalogPin.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "PITCH_ANALOG_PIN":
-                        new_value = sNum_to_aNum[self.ui.ElevatorAnalogPin.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "AILERON_MAX_LOWRATES":
-                        new_value = self.ui.MaxAileronServoValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "ELEVATOR_MAX_LOWRATES":
-                        new_value = self.ui.MaxElevatorServoValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "RUDDER_MAX_LOWRATES":
-                        new_value = self.ui.MaxRudderServoValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "AILERON_MIN_LOWRATES":
-                        new_value = self.ui.MinAileronServoValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "ELEVATOR_MIN_LOWRATES":
-                        new_value = self.ui.MinElevatorServoValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "RUDDER_MIN_LOWRATES":
-                        new_value = self.ui.MinRudderServoValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "THROTTLE_MIN_ADC":
-                        new_value = self.ui.MinThrottleADCValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "AILERON_MIN_ADC":
-                        new_value = self.ui.MinAileronADCValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "ELEVATOR_MIN_ADC":
-                        new_value = self.ui.MinElevatorADCValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "RUDDER_MIN_ADC":
-                        new_value = self.ui.MinRudderADCValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "THROTTLE_MAX_ADC":
-                        new_value = self.ui.MaxThrottleADCValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "AILERON_MAX_ADC":
-                        new_value = self.ui.MaxAileronADCValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "ELEVATOR_MAX_ADC":
-                        new_value = self.ui.MaxElevatorADCValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "RUDDER_MAX_ADC":
-                        new_value = self.ui.MaxRudderADCValue.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "AILERON_REVERSE":
-                        new_value = boolStr_to_digStr[self.ui.AileronReverse.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "ELEVATOR_REVERSE":
-                        new_value = boolStr_to_digStr[self.ui.ElevatorReverse.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "RUDDER_REVERSE":
-                        new_value = boolStr_to_digStr[self.ui.RudderReverse.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "THROTTLE_REVERSE":
-                        new_value = boolStr_to_digStr[self.ui.ThrottleReverse.currentText()]
-                        line = line.replace(setting_val, new_value)
-            
-            new_contents.append(line)
-
-        new_contents = "".join(new_contents)
-
-        with open(self.GSToolsFilename, 'w') as outFile:
-            outFile.write(new_contents)
-
-    def write_out_gs_serial(self):
-        with open(self.GSSerialFilename, 'r') as inFile:
-            contents = inFile.readlines()
-
-        new_contents = []
-
-        for line in contents:
-            if len(line.split()) >= 3:
-                define       = line.split()[0]
-                setting_name = line.split()[1]
-                setting_val  = line.split()[2]
-                
-                try:
-                    comment  = line.split()[3]
-                except:
-                    pass
-                
-                if define == "#define":
-                    if setting_name == "GS_DEBUG_PORT_NUMBER":
-                        new_value = portName_to_portNum[self.ui.GSDebugPort.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                        try:
-                            line = line.replace(comment, "//" + self.ui.GSDebugPort.currentText())
-                        except:
-                            pass
-    
-                    elif setting_name == "GS_COMMAND_PORT_NUMBER":
-                        new_value = portName_to_portNum[self.ui.GSCommandPort.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                        try:
-                            line = line.replace(comment, "//" + self.ui.GSCommandPort.currentText())
-                        except:
-                            pass
-    
-                    elif setting_name == "GS_TELEM_PORT_NUMBER":
-                        new_value = portName_to_portNum[self.ui.GSTelemetryPort.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                        try:
-                            line = line.replace(comment, "//" + self.ui.GSTelemetryPort.currentText())
-                        except:
-                            pass
-
-            new_contents.append(line)
-
-        new_contents = "".join(new_contents)
-
-        with open(self.GSSerialFilename, 'w') as outFile:
-            outFile.write(new_contents)
-
-    def write_out_ifc_tools(self):
-        with open(self.IFCToolsFilename, 'r') as inFile:
-            contents = inFile.readlines()
-
-        new_contents = []
-
-        for line in contents:
-            if len(line.split()) >= 3:
-                define       = line.split()[0]
-                setting_name = line.split()[1]
-                setting_val  = line.split()[2]
-                
-                if define == "#define":
-                    if setting_name == "LIDAR_FIXED_MOUNT":
-                        new_value = boolStr_to_digStr[self.ui.LiDARFixedMount.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "PITOT_PIN":
-                        new_value = sNum_to_aNum[self.ui.PitotTubeAnalogPin.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "THROTTLE_PIN":
-                        new_value = sNum_to_dNum[self.ui.ThrottlePin.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "AILERON_PIN":
-                        new_value = sNum_to_dNum[self.ui.AileronPin.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "ELEVATOR_PIN":
-                        new_value = sNum_to_dNum[self.ui.ElevatorPin.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "RUDDER_PIN":
-                        new_value = sNum_to_dNum[self.ui.RudderPin.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "UNSAFE_ROLL_R":
-                        new_value = self.ui.UnsafeRollRightAngle.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "UNSAFE_ROLL_L":
-                        new_value = self.ui.UnsafeRollLeftAngle.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "MAX_ROLL_R":
-                        new_value = self.ui.MaxRollRightAngle.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "MAX_ROLL_L":
-                        new_value = self.ui.MaxRollLeftAngle.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "UNSAFE_PITCH_UP":
-                        new_value = self.ui.UnsafePitchUpAngle.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "UNSAFE_PITCH_DOWN":
-                        new_value = self.ui.UnsafePitchDownAngle.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "MAX_PITCH_UP":
-                        new_value = self.ui.MaxPitchUpAngle.text()
-                        line = line.replace(setting_val, new_value)
-    
-                    elif setting_name == "MAX_PITCH_DOWN":
-                        new_value = self.ui.MaxPitchDownAngle.text()
-                        line = line.replace(setting_val, new_value)
-
-            new_contents.append(line)
-
-        new_contents = "".join(new_contents)
-
-        with open(self.IFCToolsFilename, 'w') as outFile:
-            outFile.write(new_contents)
-
-    def write_out_ifc_serial(self):
-        with open(self.IFCSerialFilename, 'r') as inFile:
-            contents = inFile.readlines()
-
-        new_contents = []
-
-        for line in contents:
-            if len(line.split()) >= 3:
-                define       = line.split()[0]
-                setting_name = line.split()[1]
-                setting_val  = line.split()[2]
-                
-                try:
-                    comment  = line.split()[3]
-                except:
-                    pass
-                
-                if define == "#define":
-                    if setting_name == "IFC_DEBUG_PORT_NUMBER":
-                        new_value = portName_to_portNum[self.ui.IFCDebugPort.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                        try:
-                            line = line.replace(comment, "//" + self.ui.IFCDebugPort.currentText())
-                        except:
-                            pass
-    
-                    elif setting_name == "IFC_COMMAND_PORT_NUMBER":
-                        new_value = portName_to_portNum[self.ui.IFCCommandPort.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                        try:
-                            line = line.replace(comment, "//" + self.ui.IFCCommandPort.currentText())
-                        except:
-                            pass
-    
-                    elif setting_name == "IFC_GPS_PORT_NUMBER":
-                        new_value = portName_to_portNum[self.ui.IFCGPSPort.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                        try:
-                            line = line.replace(comment, "//" + self.ui.IFCGPSPort.currentText())
-                        except:
-                            pass
+                    elif setting_name == 'USE_GS_TELEM':
+                        new_val = boolStr_to_digStr[str(self.ui.enable_gs_telem.isChecked())]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'USE_IFC_TELEM':
+                        new_val = boolStr_to_digStr[str(self.ui.enable_ifc_telem.isChecked())]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'USE_IMU':
+                        new_val = boolStr_to_digStr[str(self.ui.enable_imu.isChecked())]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'USE_GPS':
+                        new_val = boolStr_to_digStr[str(self.ui.enable_gps.isChecked())]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'USE_PITOT':
+                        new_val = boolStr_to_digStr[str(self.ui.enable_pitot.isChecked())]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'USE_LIDAR':
+                        new_val = boolStr_to_digStr[str(self.ui.enable_lidar.isChecked())]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'IMU_PORT':
+                        new_val = self.ui.imu_port.currentText()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'IMU_ID':
+                        new_val = self.ui.imu_address.text()
+                        line = line.replace(setting_val, new_val)
                     
-                    elif setting_name == "IFC_LIDAR_PORT_NUMBER":
-                        new_value = portName_to_portNum[self.ui.IFCLiDARPort.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                        try:
-                            line = line.replace(comment, "//" + self.ui.IFCLiDARPort.currentText())
-                        except:
-                            pass
-    
-                    elif setting_name == "IFC_TELEM_PORT_NUMBER":
-                        new_value = portName_to_portNum[self.ui.IFCTelemetryPort.currentText()]
-                        line = line.replace(setting_val, new_value)
-    
-                        try:
-                            line = line.replace(comment, "//" + self.ui.IFCTelemetryPort.currentText())
-                        except:
-                            pass
-
+                    elif setting_name == 'DEBUG_PORT_BAUD':
+                        new_val = self.ui.debug_baud.currentText()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'COMMAND_PORT_BAUD':
+                        new_val = self.ui.command_baud.currentText()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'GPS_PORT_BAUD':
+                        new_val = self.ui.gps_baud.currentText()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'LIDAR_PORT_BAUD':
+                        new_val = self.ui.lidar_baud.currentText()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'TELEM_PORT_BAUD':
+                        new_val = self.ui.telem_baud.currentText()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'IFC_DEBUG_PORT_NUMBER':
+                        new_val = portName_to_portNum[self.ui.ifc_debug_port.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'IFC_COMMAND_PORT_NUMBER':
+                        new_val = portName_to_portNum[self.ui.ifc_command_port.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'IFC_GPS_PORT_NUMBER':
+                        new_val = portName_to_portNum[self.ui.gps_port.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'IFC_LIDAR_PORT_NUMBER':
+                        new_val = portName_to_portNum[self.ui.lidar_port.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'IFC_TELEM_PORT_NUMBER':
+                        new_val = portName_to_portNum[self.ui.ifc_telem_port.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'GS_DEBUG_PORT_NUMBER':
+                        new_val = portName_to_portNum[self.ui.gs_debug_port.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'GS_COMMAND_PORT_NUMBER':
+                        new_val = portName_to_portNum[self.ui.gs_command_port.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'GS_TELEM_PORT_NUMBER':
+                        new_val = portName_to_portNum[self.ui.gs_telem_port.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'REPORT_COMMANDS_FREQ':
+                        new_val = self.ui.command_report_rate.text()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'REPORT_TELEM_FREQ':
+                        new_val = self.ui.telem_report_rate.text()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'LOSS_LINK_TIMEOUT':
+                        new_val = self.ui.loss_link_timeout.text()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'LOSS_GPS_TIMEOUT':
+                        new_val = self.ui.gps_timeout.text()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'AILERON_PIN':
+                        new_val = sNum_to_dNum[self.ui.aileron_servo_pin.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'ELEVATOR_PIN':
+                        new_val = sNum_to_dNum[self.ui.elevator_servo_pin.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'RUDDER_PIN':
+                        new_val = sNum_to_dNum[self.ui.rudder_servo_pin.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'THROTTLE_PIN':
+                        new_val = sNum_to_dNum[self.ui.throttle_servo_pin.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'ROLL_ANALOG_PIN':
+                        new_val = sNum_to_aNum[self.ui.aileron_an_pin.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'PITCH_ANALOG_PIN':
+                        new_val = sNum_to_aNum[self.ui.elevator_an_pin.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'YAW_ANALOG_PIN':
+                        new_val = sNum_to_aNum[self.ui.rudder_an_pin.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'THROTTLE_ANALOG_PIN':
+                        new_val = sNum_to_aNum[self.ui.throttle_an_pin.currentText()]
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'AILERON_MAX_ADC':
+                        new_val = self.ui.max_aileron_adc.text()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'ELEVATOR_MAX_ADC':
+                        new_val = self.ui.max_elevator_adc.text()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'RUDDER_MAX_ADC':
+                        new_val = self.ui.max_rudder_adc.text()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'THROTTLE_MAX_ADC':
+                        new_val = self.ui.max_throttle_adc.text()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'AILERON_MIN_ADC':
+                        new_val = self.ui.min_aileron_adc.text()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'ELEVATOR_MIN_ADC':
+                        new_val = self.ui.min_elevator_adc.text()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'RUDDER_MIN_ADC':
+                        new_val = self.ui.min_rudder_adc.text()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'THROTTLE_MIN_ADC':
+                        new_val = self.ui.min_throttle_adc.text()
+                        line = line.replace(setting_val, new_val)
+                        
+                    elif setting_name == 'AILERON_REVERSE':
+                        new_val = boolStr_to_digStr[str(self.ui.aileron_reverse.currentText())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'ELEVATOR_REVERSE':
+                        new_val = boolStr_to_digStr[str(self.ui.elevator_reverse.currentText())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'RUDDER_REVERSE':
+                        new_val = boolStr_to_digStr[str(self.ui.rudder_reverse.currentText())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'THROTTLE_REVERSE':
+                        new_val = boolStr_to_digStr[str(self.ui.throttle_reverse.currentText())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'AILERON_MAX':
+                        new_val = self.ui.max_aileron_servo.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'ELEVATOR_MAX':
+                        new_val = self.ui.max_elevator_servo.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'RUDDER_MAX':
+                        new_val = self.ui.max_rudder_servo.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'THROTTLE_MAX':
+                        new_val = self.ui.max_throttle_servo.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'AILERON_MIN':
+                        new_val = self.ui.min_aileron_servo.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'ELEVATOR_MIN':
+                        new_val = self.ui.min_elevator_servo.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'RUDDER_MIN':
+                        new_val = self.ui.min_rudder_servo.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'THROTTLE_MIN':
+                        new_val = self.ui.min_throttle_servo.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'LIDAR_FIXED_MOUNT':
+                        new_val = boolStr_to_digStr[str(self.ui.lidar_fixed_mount.currentText())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'GPS_REFRESH':
+                        new_val = self.ui.gps_report_rate.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'GPGGA_ENABLED':
+                        new_val = boolStr_to_digStr[str(self.ui.enable_gpgga.isChecked())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'GPGLL_ENABLED':
+                        new_val = boolStr_to_digStr[str(self.ui.enable_gpgll.isChecked())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'GPGLV_ENABLED':
+                        new_val = boolStr_to_digStr[str(self.ui.enable_gpglv.isChecked())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'GPGSA_ENABLED':
+                        new_val = boolStr_to_digStr[str(self.ui.enable_gpgsa.isChecked())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'GPRMC_ENABLED':
+                        new_val = boolStr_to_digStr[str(self.ui.enable_gprmc.isChecked())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'GPVTG_ENABLED':
+                        new_val = boolStr_to_digStr[str(self.ui.enable_gpvtg.isChecked())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'PITOT_PIN':
+                        new_val = sNum_to_aNum[self.ui.pitot_pin.currentText()]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'UNSAFE_ROLL_R':
+                        new_val = self.ui.unsafe_roll_right.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'UNSAFE_ROLL_L':
+                        new_val = self.ui.unsafe_roll_left.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'MAX_ROLL_R':
+                        new_val = self.ui.max_roll_right.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'MAX_ROLL_L':
+                        new_val = self.ui.max_roll_left.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'UNSAFE_PITCH_UP':
+                        new_val = self.ui.unsafe_pitch_up.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'UNSAFE_PITCH_DOWN':
+                        new_val = self.ui.unsafe_pitch_down.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'MAX_PITCH_UP':
+                        new_val = self.ui.max_pitch_up.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'MAX_PITCH_DOWN':
+                        new_val = self.ui.max_pitch_down.text()
+                        line = line.replace(setting_val, new_val)
+                    
             new_contents.append(line)
 
-        new_contents = "".join(new_contents)
+        new_contents = ''.join(new_contents)
 
-        with open(self.IFCSerialFilename, 'w') as outFile:
+        with open(self.shared_tools_filename, 'w') as outFile:
             outFile.write(new_contents)
 
     def close(self):
@@ -1241,7 +1236,7 @@ def main():
     sys.exit(app.exec_())
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     try:
         main()
     except SystemExit:

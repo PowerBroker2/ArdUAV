@@ -30,17 +30,17 @@ extern TwoWire Wire2;
 #define COMMAND_PORT_BAUD 115200
 #define GPS_PORT_BAUD     115200
 #define LIDAR_PORT_BAUD   115200
-#define TELEM_PORT_BAUD   2000000
+#define TELEM_PORT_BAUD   115200
 
 #define IFC_DEBUG_PORT_NUMBER   0 //USB
 #define IFC_COMMAND_PORT_NUMBER 3 //Serial3
-#define IFC_GPS_PORT_NUMBER     1 //Serial1
+#define IFC_GPS_PORT_NUMBER     4 //Serial4
 #define IFC_LIDAR_PORT_NUMBER   2 //Serial2
-#define IFC_TELEM_PORT_NUMBER   5 //Serial5
+#define IFC_TELEM_PORT_NUMBER   1 //Serial1
 
 #define GS_DEBUG_PORT_NUMBER   0 //USB
-#define GS_COMMAND_PORT_NUMBER 1 //Serial1
-#define GS_TELEM_PORT_NUMBER   4 //Serial4
+#define GS_COMMAND_PORT_NUMBER 3 //Serial3
+#define GS_TELEM_PORT_NUMBER   1 //Serial1
 
 #define COMMAND_BUFFER   10
 #define TELEMETRY_BUFFER 10
@@ -65,15 +65,15 @@ extern TwoWire Wire2;
 #define RUDDER_OFFSET   0
 #define THROTTLE_OFFSET 0
 
-#define AILERON_SERVO_PIN  39 //servo driver output port number
-#define ELEVATOR_SERVO_PIN 24 //servo driver output port number
+#define AILERON_SERVO_PIN  4 //servo driver output port number
+#define ELEVATOR_SERVO_PIN 5 //servo driver output port number
 #define RUDDER_SERVO_PIN   6 //servo driver output port number
-#define THROTTLE_SERVO_PIN 2 //digital ESC signal pin
+#define THROTTLE_SERVO_PIN 3 //digital ESC signal pin
 
-#define ROLL_ANALOG_PIN     A3
-#define PITCH_ANALOG_PIN    A2
-#define YAW_ANALOG_PIN      A17
-#define THROTTLE_ANALOG_PIN A0
+#define ROLL_ANALOG_PIN     A8
+#define PITCH_ANALOG_PIN    A9
+#define YAW_ANALOG_PIN      A16
+#define THROTTLE_ANALOG_PIN A17
 
 #define AILERON_MAX_ADC  41800
 #define ELEVATOR_MAX_ADC 40900
