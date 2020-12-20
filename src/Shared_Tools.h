@@ -39,8 +39,8 @@ extern TwoWire Wire2;
 #define IFC_TELEM_PORT_NUMBER   1 //Serial1
 
 #define GS_DEBUG_PORT_NUMBER   0 //USB
-#define GS_COMMAND_PORT_NUMBER 3 //Serial3
-#define GS_TELEM_PORT_NUMBER   1 //Serial1
+#define GS_COMMAND_PORT_NUMBER 1 //Serial1
+#define GS_TELEM_PORT_NUMBER   2 //Serial2
 
 #define COMMAND_BUFFER   10
 #define TELEMETRY_BUFFER 10
