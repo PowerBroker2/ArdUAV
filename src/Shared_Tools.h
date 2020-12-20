@@ -200,6 +200,8 @@ class base
 public:
 	bool linkConnected;
 	SerialTransfer commandTransfer;
+	FireTimer commandTimer;
+	FireTimer telemTimer;
 	FireTimer lossLinkTimer;
 	telemetry_struct telemetry;
 	control_inputs_struct controlInputs;
@@ -208,8 +210,5 @@ public:
 	virtual bool tick()  = 0;
 
 protected:
-	FireTimer commandTimer;
-	FireTimer telemTimer;
-
 	virtual bool linkFailover() = 0;
 };
