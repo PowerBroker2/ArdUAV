@@ -19,7 +19,7 @@ extern TwoWire Wire2;
 #define USE_GS_TELEM  1
 #define USE_IFC_TELEM 1
 #define USE_IMU       1
-#define USE_GPS       1
+#define USE_GPS       0
 #define USE_PITOT     1
 #define USE_LIDAR     1
 
