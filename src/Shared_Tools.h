@@ -143,7 +143,7 @@ float mapfloat(float x, float in_min, float in_max, float out_min, float out_max
 
 
 //struct to handle control surface commands
-struct control_surfaces_struct
+struct __attribute__((__packed__)) control_surfaces_struct
 {
 	uint8_t command_index;
 	uint8_t analog_pin;
@@ -156,7 +156,7 @@ struct control_surfaces_struct
 };
 
 //struct to store telemetry data
-struct telemetry_struct
+struct __attribute__((__packed__)) telemetry_struct
 {
 	uint16_t altitude;      //cm
 	float courseAngleIMU;   //degrees
@@ -177,7 +177,7 @@ struct telemetry_struct
 };
 
 //struct to store control values (i.e. servo commands etc.)
-struct control_inputs_struct
+struct __attribute__((__packed__)) control_inputs_struct
 {
 	bool limiter_enable;        //enables and disables pitch and bank limiter
 	bool manual_control_enable; //enables and disables manual flight control
