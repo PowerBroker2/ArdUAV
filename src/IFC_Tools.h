@@ -178,6 +178,12 @@ private:
 
 #if USE_GPS
 	FireTimer lossGPSTimer;
+	FireTimer autobaudTimer;
+
+	uint32_t bauds[12]   = { 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200 };
+	uint32_t foundBaud = 38400;
+
+	uint32_t findBaud();
 	void setupGPS();
 	void readGPSData();
 	bool gpsFailover();

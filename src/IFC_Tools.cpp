@@ -209,6 +209,45 @@ void IFC_Class::readGPSData()
 
 
 
+uint32_t IFC_Class::findBaud()
+{
+	for (uint8_t i = 0; i < (sizeof(bauds) / sizeof(bauds[0])); i++)
+	{
+		bool found = false;
+		IFC_GPS_PORT.begin(bauds[i]);
+
+		delay(100);
+
+		while (IFC_GPS_PORT.available())
+			IFC_GPS_PORT.read();
+
+		autobaudTimer.begin(100);
+
+		while (!autobaudTimer.fire())
+		{
+			if (IFC_GPS_PORT.available() >= 2)
+			{
+				char temp  = IFC_GPS_PORT.read();
+				char temp2 = IFC_GPS_PORT.read();
+
+				if (temp == '$' && temp2 == 'G')
+				{
+					found = true;
+					break;
+				}
+			}
+		}
+
+		if (found)
+			return bauds[i];
+	}
+
+	return 38400;
+}
+
+
+
+
 void IFC_Class::setupGPS()
 {
 	//disable all NMEA sentences first
@@ -235,7 +274,7 @@ void IFC_Class::setupGPS()
 
 	changeFreq(GPS_REFRESH);
 
-	if (GPS_PORT_BAUD != 9600)
+	if (GPS_PORT_BAUD != foundBaud)
 		changeBaud(GPS_PORT_BAUD);
 }
 
@@ -374,82 +413,35 @@ void IFC_Class::begin()
 
 
 
-	//initialize serial streams
-	IFC_COMMAND_PORT.begin(COMMAND_PORT_BAUD);
-
-#if USE_IFC_DEBUG
-	IFC_DEBUG_PORT.begin(DEBUG_PORT_BAUD);
-#endif
-
-#if USE_IFC_TELEM
-	IFC_TELEM_PORT.begin(TELEM_PORT_BAUD);
-#endif
-
-#if USE_LIDAR
-	IFC_LIDAR_PORT.begin(LIDAR_PORT_BAUD);
-#endif
-
-
-
-
 	//wait for all serial ports to come online
 #if USE_IFC_DEBUG
 	IFC_DEBUG_PORT.println(F("Initializing serial ports..."));
+#endif
+
+#if USE_IFC_DEBUG
 	IFC_DEBUG_PORT.print(F("Initializing command port at Serial")); IFC_DEBUG_PORT.print(IFC_COMMAND_PORT_NUMBER);  IFC_DEBUG_PORT.println(F("..."));
+#endif
+	IFC_COMMAND_PORT.begin(COMMAND_PORT_BAUD);
 
 #if USE_GPS
-	IFC_DEBUG_PORT.print(F("Initializing GPS port at Serial"));     IFC_DEBUG_PORT.print(IFC_GPS_PORT_NUMBER);      IFC_DEBUG_PORT.println(F("..."));
+#if USE_IFC_DEBUG
+	IFC_DEBUG_PORT.print(F("Initializing GPS port at Serial")); IFC_DEBUG_PORT.print(IFC_GPS_PORT_NUMBER);  IFC_DEBUG_PORT.println(F("..."));
+#endif
+	foundBaud = findBaud();
 #endif
 
 #if USE_LIDAR
-	IFC_DEBUG_PORT.print(F("Initializing LiDAR port at Serial"));   IFC_DEBUG_PORT.print(IFC_LIDAR_PORT_NUMBER);    IFC_DEBUG_PORT.println(F("..."));
-#endif
-
 #if USE_IFC_DEBUG
-	IFC_DEBUG_PORT.print(F("Initializing telemetry at Serial"));    IFC_DEBUG_PORT.print(IFC_TELEM_PORT_NUMBER);    IFC_DEBUG_PORT.println(F("..."));
+	IFC_DEBUG_PORT.print(F("Initializing LiDAR port at Serial")); IFC_DEBUG_PORT.print(IFC_LIDAR_PORT_NUMBER);  IFC_DEBUG_PORT.println(F("..."));
 #endif
-#endif
-
-	while (!IFC_COMMAND_PORT)
-	{
-#if USE_IFC_DEBUG
-		IFC_DEBUG_PORT.print(F("Initializing command port at Serial")); IFC_DEBUG_PORT.print(IFC_COMMAND_PORT_NUMBER);  IFC_DEBUG_PORT.println(F("..."));
-#endif
-		IFC_COMMAND_PORT.begin(COMMAND_PORT_BAUD);
-		delay(500);
-	}
-
-#if USE_GPS
-	while (!IFC_GPS_PORT)
-	{
-#if USE_IFC_DEBUG
-		IFC_DEBUG_PORT.print(F("Initializing GPS port at Serial")); IFC_DEBUG_PORT.print(IFC_GPS_PORT_NUMBER);  IFC_DEBUG_PORT.println(F("..."));
-#endif
-		IFC_GPS_PORT.begin(9600); //GPS defaults to 9600 until we change it in setupGPS() later within begin()
-		delay(500);
-	}
-#endif
-
-#if USE_LIDAR
-	while (!IFC_LIDAR_PORT)
-	{
-#if USE_IFC_DEBUG
-		IFC_DEBUG_PORT.print(F("Initializing LiDAR port at Serial")); IFC_DEBUG_PORT.print(IFC_LIDAR_PORT);  IFC_DEBUG_PORT.println(F("..."));
-#endif
-		IFC_LIDAR_PORT.begin(LIDAR_PORT_BAUD);
-		delay(500);
-	}
+	IFC_LIDAR_PORT.begin(LIDAR_PORT_BAUD);
 #endif
 
 #if USE_IFC_TELEM
-	while (!IFC_TELEM_PORT)
-	{
-#if USE_DEBUG
-		IFC_DEBUG_PORT.print(F("Initializing telemetry at Serial")); IFC_DEBUG_PORT.print(IFC_TELEM_PORT_NUMBER);  IFC_DEBUG_PORT.println(F("..."));
+#if USE_IFC_DEBUG
+	IFC_DEBUG_PORT.print(F("Initializing telemetry at Serial")); IFC_DEBUG_PORT.print(IFC_TELEM_PORT_NUMBER);  IFC_DEBUG_PORT.println(F("..."));
 #endif
-		IFC_TELEM_PORT.begin(TELEM_PORT_BAUD);
-		delay(500);
-	}
+	IFC_TELEM_PORT.begin(TELEM_PORT_BAUD);
 #endif
 
 #if USE_IFC_DEBUG

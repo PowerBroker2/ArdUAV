@@ -19,18 +19,18 @@ extern TwoWire Wire2;
 #define USE_GS_TELEM  1
 #define USE_IFC_TELEM 1
 #define USE_IMU       1
-#define USE_GPS       0
+#define USE_GPS       1
 #define USE_PITOT     1
 #define USE_LIDAR     1
 
 #define IMU_PORT Wire
 #define IMU_ID   55
 
-#define DEBUG_PORT_BAUD   115200
-#define COMMAND_PORT_BAUD 115200
-#define GPS_PORT_BAUD     115200
-#define LIDAR_PORT_BAUD   115200
-#define TELEM_PORT_BAUD   115200
+#define DEBUG_PORT_BAUD       115200
+#define COMMAND_PORT_BAUD     115200
+#define GPS_PORT_BAUD         115200
+#define LIDAR_PORT_BAUD       115200
+#define TELEM_PORT_BAUD       115200
 
 #define IFC_DEBUG_PORT_NUMBER   0 //USB
 #define IFC_COMMAND_PORT_NUMBER 3 //Serial3
