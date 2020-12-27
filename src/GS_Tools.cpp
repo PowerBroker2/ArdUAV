@@ -12,7 +12,7 @@ void GS_Class::sendTelem()
 	if (telemTimer.fire())
 	{
 		uint16_t sendLen = telemetryTransfer.txObj(telemetry);
-		sendLen += telemetryTransfer.txObj(controlInputs, sendLen);
+		sendLen = telemetryTransfer.txObj(controlInputs, sendLen);
 		sendLen += TELEMETRY_BUFFER;
 
 		telemetryTransfer.sendData(sendLen);
