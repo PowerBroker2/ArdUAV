@@ -65,9 +65,9 @@ extern TwoWire Wire2;
 #define RUDDER_OFFSET   0
 #define THROTTLE_OFFSET 0
 
-#define AILERON_SERVO_PIN  4 //servo driver output port number
-#define ELEVATOR_SERVO_PIN 5 //servo driver output port number
-#define RUDDER_SERVO_PIN   6 //servo driver output port number
+#define AILERON_SERVO_PIN  6 //servo driver output port number
+#define ELEVATOR_SERVO_PIN 4 //servo driver output port number
+#define RUDDER_SERVO_PIN   5 //servo driver output port number
 #define THROTTLE_SERVO_PIN 3 //digital ESC signal pin
 
 #define ROLL_ANALOG_PIN     A8
