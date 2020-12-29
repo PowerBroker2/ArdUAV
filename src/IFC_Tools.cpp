@@ -386,7 +386,7 @@ void IFC_Class::lidarEvent()
 	if (lidarTransfer.available())
 	{
 		//update controlInputs struct so that the next time the servos can be updated with the latest positions
-		lidarTransfer.rxObj(telemetry.altitude);
+		telemetry.altitude = lidarTransfer.packet.rxBuff[0] | (lidarTransfer.packet.rxBuff[1] << 8);
 
 		//use trig to find the triangulated elevation if the LiDAR sensor is not stabilized with a gimbal
 		if (LIDAR_FIXED_MOUNT)
