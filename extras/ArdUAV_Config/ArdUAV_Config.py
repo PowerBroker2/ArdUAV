@@ -1038,19 +1038,19 @@ class AppWindow(QDialog):
                         new_val = self.ui.gps_timeout.text()
                         line = line.replace(setting_val, new_val)
                         
-                    elif setting_name == 'AILERON_PIN':
+                    elif setting_name == 'AILERON_SERVO_PIN':
                         new_val = sNum_to_dNum[self.ui.aileron_servo_pin.currentText()]
                         line = line.replace(setting_val, new_val)
                         
-                    elif setting_name == 'ELEVATOR_PIN':
+                    elif setting_name == 'ELEVATOR_SERVO_PIN':
                         new_val = sNum_to_dNum[self.ui.elevator_servo_pin.currentText()]
                         line = line.replace(setting_val, new_val)
                         
-                    elif setting_name == 'RUDDER_PIN':
+                    elif setting_name == 'RUDDER_SERVO_PIN':
                         new_val = sNum_to_dNum[self.ui.rudder_servo_pin.currentText()]
                         line = line.replace(setting_val, new_val)
                         
-                    elif setting_name == 'THROTTLE_PIN':
+                    elif setting_name == 'THROTTLE_SERVO_PIN':
                         new_val = sNum_to_dNum[self.ui.throttle_servo_pin.currentText()]
                         line = line.replace(setting_val, new_val)
                         
