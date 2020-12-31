@@ -23,8 +23,14 @@ extern TwoWire Wire2;
 #define USE_PITOT     1
 #define USE_LIDAR     1
 
-#define IMU_PORT Wire
-#define IMU_ID   55
+#define IMU_PORT     Wire
+#define IMU_ID       55
+#define COMPASS_RAD  vect.x()
+#define PITCH_RAD    vect.y()
+#define ROLL_RAD     vect.z()
+#define FLIP_COMPASS 0
+#define FLIP_PITCH   1
+#define FLIP_ROLL    0
 
 #define DEBUG_PORT_BAUD       115200
 #define COMMAND_PORT_BAUD     115200
@@ -160,8 +166,8 @@ struct __attribute__((__packed__)) telemetry_struct
 {
 	uint16_t altitude;      //cm
 	float courseAngleIMU;   //degrees
-	float rollAngle;        //degrees
-	float pitchAngle;       //degrees
+	float rollAngle;        //degrees (positive --> roll right)
+	float pitchAngle;       //degrees (positive --> nose up)
 	uint16_t pitotPressure; //unitless             MSB                                                                        LSB
 	uint8_t validFlags;     //bit encoded bools (reserved, reserved, imuRecent, imuValid, fixRecent, fixValid, linkValid, manualControl)
 	float latitude;         //dd
