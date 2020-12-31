@@ -129,6 +129,11 @@ i2c_portName_to_portIndex = {'Wire':  0,
                              'Wire2': 2}
 i2c_portIndex_to_portName = reverse_dict(i2c_portName_to_portIndex)
 
+axisName_to_axisIndex = {'vect.x()': 0,
+                         'vect.y()': 1,
+                         'vect.z()': 2}
+axisIndex_to_axisName = reverse_dict(axisName_to_axisIndex)
+
 
 class AppWindow(QDialog):
     def __init__(self):
@@ -207,7 +212,13 @@ class AppWindow(QDialog):
                                                                               'lidar_fixed_mount': ""},
                                                                     'imu': {'enable_imu': "",
                                                                             'imu_port': "",
-                                                                            'imu_address': ""},
+                                                                            'imu_address': "",
+                                                                            'compass_rad': "",
+                                                                            'pitch_rad': "",
+                                                                            'roll_rad': "",
+                                                                            'flip_compass': "",
+                                                                            'flip_pitch': "",
+                                                                            'flip_roll': ""},
                                                                     'pitot': {'enable_pitot': "",
                                                                               'pitot_pin': ""}},
                                                 'autopilot_settings': {'unsafe_roll_right': "",
@@ -293,6 +304,12 @@ class AppWindow(QDialog):
         self.ui.enable_imu.clicked.connect(self.update_param_dict)
         self.ui.imu_port.currentIndexChanged.connect(self.update_param_dict)
         self.ui.imu_address.valueChanged.connect(self.update_param_dict)
+        self.ui.compass_rad.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.pitch_rad.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.roll_rad.currentIndexChanged.connect(self.update_param_dict)
+        self.ui.flip_compass.clicked.connect(self.update_param_dict)
+        self.ui.flip_pitch.clicked.connect(self.update_param_dict)
+        self.ui.flip_roll.clicked.connect(self.update_param_dict)
         self.ui.enable_pitot.clicked.connect(self.update_param_dict)
         self.ui.pitot_pin.currentIndexChanged.connect(self.update_param_dict)
         self.ui.unsafe_roll_right.valueChanged.connect(self.update_param_dict)
@@ -422,6 +439,12 @@ class AppWindow(QDialog):
         self.currentParameters['ifc_tools']['sensor_settings']['imu']['enable_imu']      = str(self.ui.enable_imu.isChecked())
         self.currentParameters['ifc_tools']['sensor_settings']['imu']['imu_port']        = self.ui.imu_port.currentText()
         self.currentParameters['ifc_tools']['sensor_settings']['imu']['imu_address']     = self.ui.imu_address.text()
+        self.currentParameters['ifc_tools']['sensor_settings']['imu']['compass_rad']     = axisIndex_to_axisName[str(self.ui.compass_rad.currentIndex())]
+        self.currentParameters['ifc_tools']['sensor_settings']['imu']['pitch_rad']       = axisIndex_to_axisName[str(self.ui.pitch_rad.currentIndex())]
+        self.currentParameters['ifc_tools']['sensor_settings']['imu']['roll_rad']        = axisIndex_to_axisName[str(self.ui.roll_rad.currentIndex())]
+        self.currentParameters['ifc_tools']['sensor_settings']['imu']['flip_compass']    = str(self.ui.flip_compass.isChecked())
+        self.currentParameters['ifc_tools']['sensor_settings']['imu']['flip_pitch']      = str(self.ui.flip_pitch.isChecked())
+        self.currentParameters['ifc_tools']['sensor_settings']['imu']['flip_roll']       = str(self.ui.flip_roll.isChecked())
         self.currentParameters['ifc_tools']['sensor_settings']['pitot']['enable_pitot']  = str(self.ui.enable_pitot.isChecked())
         self.currentParameters['ifc_tools']['sensor_settings']['pitot']['pitot_pin']     = self.ui.pitot_pin.currentText()
         self.currentParameters['ifc_tools']['autopilot_settings']['unsafe_roll_right']   = self.ui.unsafe_roll_right.text()
@@ -500,6 +523,24 @@ class AppWindow(QDialog):
                         
                     elif setting_name == 'IMU_ID':
                         self.ui.imu_address.setValue(int(setting_val))
+                        
+                    elif setting_name == 'COMPASS_RAD':
+                        self.ui.compass_rad.setCurrentIndex(axisName_to_axisIndex[setting_val])
+                    
+                    elif setting_name == 'PITCH_RAD':
+                        self.ui.pitch_rad.setCurrentIndex(axisName_to_axisIndex[setting_val])
+                    
+                    elif setting_name == 'ROLL_RAD':
+                        self.ui.roll_rad.setCurrentIndex(axisName_to_axisIndex[setting_val])
+                    
+                    elif setting_name == 'FLIP_COMPASS':
+                        self.ui.flip_compass.setChecked(bool(int(setting_val)))
+                    
+                    elif setting_name == 'FLIP_PITCH':
+                        self.ui.flip_pitch.setChecked(bool(int(setting_val)))
+                    
+                    elif setting_name == 'FLIP_ROLL':
+                        self.ui.flip_roll.setChecked(bool(int(setting_val)))
                     
                     elif setting_name == 'DEBUG_PORT_BAUD':
                         self.ui.debug_baud.setCurrentIndex(baudNum_to_baudIndex[setting_val])
@@ -877,6 +918,24 @@ class AppWindow(QDialog):
         self.value = self.currentParameters['ifc_tools']['sensor_settings']['imu']['imu_address']
         self.ui.imu_address.setValue(int(self.value))
         
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['imu']['compass_rad']
+        self.ui.compass_rad.setCurrentIndex(axisName_to_axisIndex[self.value])
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['imu']['pitch_rad']
+        self.ui.pitch_rad.setCurrentIndex(axisName_to_axisIndex[self.value])
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['imu']['roll_rad']
+        self.ui.roll_rad.setCurrentIndex(axisName_to_axisIndex[self.value])
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['imu']['flip_compass']
+        self.ui.flip_compass.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['imu']['flip_pitch']
+        self.ui.flip_pitch.setChecked(self.value.capitalize() == 'True')
+        
+        self.value = self.currentParameters['ifc_tools']['sensor_settings']['imu']['flip_roll']
+        self.ui.flip_roll.setChecked(self.value.capitalize() == 'True')
+        
         self.value = self.currentParameters['ifc_tools']['sensor_settings']['pitot']['enable_pitot']
         self.ui.enable_pitot.setChecked(self.value.capitalize() == 'True')
         
@@ -968,6 +1027,30 @@ class AppWindow(QDialog):
                         
                     elif setting_name == 'IMU_ID':
                         new_val = self.ui.imu_address.text()
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'COMPASS_RAD':
+                        new_val = axisIndex_to_axisName[str(self.ui.compass_rad.currentIndex())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'PITCH_RAD':
+                        new_val = axisIndex_to_axisName[str(self.ui.pitch_rad.currentIndex())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'ROLL_RAD':
+                        new_val = axisIndex_to_axisName[str(self.ui.roll_rad.currentIndex())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'FLIP_COMPASS':
+                        new_val = boolStr_to_digStr[str(self.ui.flip_compass.isChecked())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'FLIP_PITCH':
+                        new_val = boolStr_to_digStr[str(self.ui.flip_pitch.isChecked())]
+                        line = line.replace(setting_val, new_val)
+                    
+                    elif setting_name == 'FLIP_ROLL':
+                        new_val = boolStr_to_digStr[str(self.ui.flip_roll.isChecked())]
                         line = line.replace(setting_val, new_val)
                     
                     elif setting_name == 'DEBUG_PORT_BAUD':

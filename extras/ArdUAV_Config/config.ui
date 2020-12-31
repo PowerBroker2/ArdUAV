@@ -1105,8 +1105,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>737</width>
-                <height>422</height>
+                <width>205</width>
+                <height>180</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_17">
@@ -1293,8 +1293,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>737</width>
-                <height>422</height>
+                <width>198</width>
+                <height>180</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_18">
@@ -1481,8 +1481,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>737</width>
-                <height>422</height>
+                <width>200</width>
+                <height>180</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_19">
@@ -2663,61 +2663,180 @@
                     <height>378</height>
                    </rect>
                   </property>
-                  <layout class="QGridLayout" name="gridLayout_33">
-                   <item row="0" column="0">
-                    <layout class="QHBoxLayout" name="horizontalLayout_70">
+                  <layout class="QVBoxLayout" name="verticalLayout_15">
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout_14">
                      <item>
-                      <widget class="QCheckBox" name="enable_imu">
-                       <property name="text">
-                        <string>Enable IMU</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_70">
-                       <property name="text">
-                        <string>IMU Port</string>
-                       </property>
-                       <property name="alignment">
-                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QComboBox" name="imu_port">
+                      <layout class="QHBoxLayout" name="horizontalLayout_11">
                        <item>
-                        <property name="text">
-                         <string>Wire</string>
-                        </property>
+                        <widget class="QCheckBox" name="enable_imu">
+                         <property name="text">
+                          <string>Enable IMU</string>
+                         </property>
+                        </widget>
                        </item>
                        <item>
-                        <property name="text">
-                         <string>Wire1</string>
-                        </property>
+                        <widget class="QLabel" name="label_70">
+                         <property name="text">
+                          <string>IMU Port</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
                        </item>
                        <item>
-                        <property name="text">
-                         <string>Wire2</string>
-                        </property>
+                        <widget class="QComboBox" name="imu_port">
+                         <item>
+                          <property name="text">
+                           <string>Wire</string>
+                          </property>
+                         </item>
+                         <item>
+                          <property name="text">
+                           <string>Wire1</string>
+                          </property>
+                         </item>
+                         <item>
+                          <property name="text">
+                           <string>Wire2</string>
+                          </property>
+                         </item>
+                        </widget>
                        </item>
-                      </widget>
+                       <item>
+                        <widget class="QLabel" name="label_5">
+                         <property name="text">
+                          <string>IMU Address</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="imu_address">
+                         <property name="maximum">
+                          <number>255</number>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
                      </item>
                      <item>
-                      <widget class="QLabel" name="label_5">
-                       <property name="text">
-                        <string>IMU Address</string>
-                       </property>
-                       <property name="alignment">
-                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSpinBox" name="imu_address">
-                       <property name="maximum">
-                        <number>255</number>
-                       </property>
-                      </widget>
+                      <layout class="QVBoxLayout" name="verticalLayout_13">
+                       <item>
+                        <layout class="QHBoxLayout" name="horizontalLayout_8">
+                         <item>
+                          <widget class="QLabel" name="label_10">
+                           <property name="text">
+                            <string>Compass Axis</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QComboBox" name="compass_rad">
+                           <item>
+                            <property name="text">
+                             <string>X</string>
+                            </property>
+                           </item>
+                           <item>
+                            <property name="text">
+                             <string>Y</string>
+                            </property>
+                           </item>
+                           <item>
+                            <property name="text">
+                             <string>Z</string>
+                            </property>
+                           </item>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="flip_compass">
+                           <property name="text">
+                            <string>Flip Sign</string>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                       <item>
+                        <layout class="QHBoxLayout" name="horizontalLayout_10">
+                         <item>
+                          <widget class="QLabel" name="label_14">
+                           <property name="text">
+                            <string>Pitch Axis</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QComboBox" name="pitch_rad">
+                           <item>
+                            <property name="text">
+                             <string>X</string>
+                            </property>
+                           </item>
+                           <item>
+                            <property name="text">
+                             <string>Y</string>
+                            </property>
+                           </item>
+                           <item>
+                            <property name="text">
+                             <string>Z</string>
+                            </property>
+                           </item>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="flip_pitch">
+                           <property name="text">
+                            <string>Flip Sign</string>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                       <item>
+                        <layout class="QHBoxLayout" name="horizontalLayout_9">
+                         <item>
+                          <widget class="QLabel" name="label_13">
+                           <property name="text">
+                            <string>Roll Axis</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QComboBox" name="roll_rad">
+                           <item>
+                            <property name="text">
+                             <string>X</string>
+                            </property>
+                           </item>
+                           <item>
+                            <property name="text">
+                             <string>Y</string>
+                            </property>
+                           </item>
+                           <item>
+                            <property name="text">
+                             <string>Z</string>
+                            </property>
+                           </item>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QCheckBox" name="flip_roll">
+                           <property name="text">
+                            <string>Flip Sign</string>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                      </layout>
                      </item>
                     </layout>
                    </item>
